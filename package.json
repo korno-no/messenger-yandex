@@ -6,7 +6,8 @@
   "scripts": {
     "start": "PORT=3000 vite build && node ./server.js",
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "test": "npm run build && npm run start && npm run run-tests"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
