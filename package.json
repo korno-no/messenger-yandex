@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "PORT=3000 vite build && node ./server.js",
+    "start": "vite --port 3000 build && node ./server.js",
     "build": "vite build",
-    "dev": "vite",
-    "test": "npm run build && npm run start && npm run run-tests"
+    "dev": "vite"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
