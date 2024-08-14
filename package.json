@@ -6,7 +6,8 @@
   "scripts": {
     "start": "vite --port 3000 build && node ./server.js",
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
