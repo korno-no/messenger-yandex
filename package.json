@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npx vite build && node ./server.js",
-    "build": "npx vite build",
-    "dev": "npx vite",
-    "preview": "npx vite preview"
+    "start": "vite build && node ./server.js",
+    "build": "vite build",
+    "dev": "vite"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
