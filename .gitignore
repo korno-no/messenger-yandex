@@ -1,0 +1,6 @@
+# Игнорирование node_modules
+node_modules/
+
+# Игнорирование сборочных директорий
+dist/
+build/
