@@ -18,9 +18,9 @@ Wanna see it live? Check out the project hosted on Netlify: [Messenger Project](
 Wanna check it out locally? Clone the project and install the dependencies:
 
 ```
-git clone https://github.com/yourusername/your-project.git
+git clone https://github.com/korno-no/messenger-yandex.git
 
-cd your-project
+cd messenger-yandex
 
 npm install
 ```
