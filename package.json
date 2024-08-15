@@ -1,0 +1,24 @@
+{
+  "name": "messenger",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite build && node ./server.js",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "handlebars": "^4.7.8",
+    "vite-plugin-handlebars": "^2.0.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
