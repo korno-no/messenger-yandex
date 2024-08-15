@@ -18,7 +18,9 @@ Wanna see it live? Check out the project hosted on Netlify: [Messenger Project](
 Wanna check it out locally? Clone the project and install the dependencies:
 
 ```git clone https://github.com/yourusername/your-project.git
+
 cd your-project
+
 npm install```
 
 Run the project locally to see it in action:
