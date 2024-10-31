@@ -7,7 +7,9 @@
     "start": "vite build && node ./server.js",
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint && npx stylelint \"**/*.css\" && tsc --noEmit"
+
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
@@ -17,6 +19,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "stylelint": "^16.10.0",
+    "stylelint-config-standard": "^36.0.1",
     "typescript": "^5.2.2",
     "vite": "^5.4.10"
   },

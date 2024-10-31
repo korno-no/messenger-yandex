@@ -5,6 +5,7 @@
     display: flex; 
     
 }
+
 .button_primary{
     margin: 10px 0;
     height: 25px;
@@ -18,10 +19,12 @@
 .button_link{
     text-decoration: underline;
 }
+
 .button_link_dangerous{
     text-decoration: underline;
     color: #E562AD;
 }
+
 .button_secondary{
     width: 15px;
     height: 15px;

@@ -5,6 +5,7 @@
     position: relative;
     margin:10px 0;
 }
+
 .input_field {
     padding: 10px 0 10px 10px;
     border: 1px black solid;
@@ -13,6 +14,7 @@
     z-index: 10;
     
 }
+
 .input_label {
     position: absolute;
     transform: translateY(10px);
@@ -33,6 +35,7 @@
     transform: translateY(-16px);
     font-size: 12px;
 }
+
 .input_field_password, 
 .input_field_password_confirm,
 .input_field_oldPassword,
@@ -48,12 +51,14 @@
         font-size: 14px;
         transition: none;  
 }
+
 /* override for wide input when not placeholder-shown or focused */
 .input_field_wide:not(:placeholder-shown) + .input_label,
 .input_field_wide:focus + .input_label {
     transform: none;   
     font-size: 14px;
 }
+
 .input_error {
     z-index: 1;
     position: absolute;
@@ -79,7 +84,8 @@
 .input_field_wide{
     width: 100%;
 }
+
 .input_field_bottom{
     flex: 1;
-    margin: 10px 10px;
+    margin: 10px;
 }
