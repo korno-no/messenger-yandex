@@ -10,12 +10,21 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "stylelint": "^16.10.0",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "vite": "^5.4.10"
   },
   "dependencies": {
     "express": "^4.19.2",
     "handlebars": "^4.7.8",
+    "uuid": "^11.0.2",
+    "vite": "^5.4.10",
     "vite-plugin-handlebars": "^2.0.0"
   },
   "engines": {

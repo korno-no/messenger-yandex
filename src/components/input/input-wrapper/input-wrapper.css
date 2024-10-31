@@ -57,14 +57,17 @@
 .input_error {
     z-index: 1;
     position: absolute;
-    top: 7px;
-    left: 7px;
-    right: -7px;
+    top: 7px; 
+    left: 7px; 
+    right: -7px; 
     height: 41px;
     width: -webkit-fill-available;
     background-color: #E562AD;
     border: 1px black solid;
     border-radius: 8px;
+
+    animation: fadeInSlideDown 0.5s ease forwards;
+
 }
 
 .input_error-text{
@@ -79,7 +82,13 @@
 .input_field_wide{
     width: 100%;
 }
-.input_field_bottom{
-    flex: 1;
-    margin: 10px 10px;
+
+
+@keyframes fadeInSlideDown {
+    0% {
+        transform: translateY(-7px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
