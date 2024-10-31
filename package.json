@@ -9,7 +9,6 @@
     "dev": "vite",
     "preview": "vite preview",
     "lint": "eslint && npx stylelint \"**/*.css\" && tsc --noEmit"
-
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
