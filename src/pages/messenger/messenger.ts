@@ -1,12 +1,12 @@
 
-import { Button } from "../../components"
-import { Input } from "../../components"
-import { InputWrapper } from "../../components"
-import { ContactCard} from "../../components";
-import { Message} from "../../components";
-import { BlockProps } from "../../core/block";
-import Block from "../../core/block"
-import Validation from "../../utils/validation";
+import { Button } from '../../components'
+import { Input } from '../../components'
+import { InputWrapper } from '../../components'
+import { ContactCard} from '../../components';
+import { Message} from '../../components';
+import { BlockProps } from '../../core/block';
+import Block from '../../core/block'
+import Validation from '../../utils/validation';
 
 
 
@@ -33,28 +33,28 @@ export default class MessengerPage extends Block <IMessengerProps>{
     constructor(props: IMessengerProps) {
         super({
             ...props,
-            title: "Messenger Page"
+            title: 'Messenger Page'
         })
     }
     init(){
 
-        const ProfileButton = new Button({type:"text",text: 'profile >', modificator:"pull-right", settings: {withInternalID: true},
+        const ProfileButton = new Button({type:'text',text: 'profile >', modificator:'pull-right', settings: {withInternalID: true},
             onClick: (e: Event) => {
                 e.preventDefault();
-                console.log("ProfileButton have been pressed");
+                console.log('ProfileButton have been pressed');
             }
         });
 
         const SearchInput= new InputWrapper({
             type:'search', 
-            name: "search", 
-            label: "search", 
+            name: 'search', 
+            label: 'search', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'search', 
-                name: "search", 
-                label: "search", 
+                name: 'search', 
+                label: 'search', 
                 id: 'SearchInput',
                 settings: {withInternalID: true},
                 
@@ -73,25 +73,25 @@ export default class MessengerPage extends Block <IMessengerProps>{
         ]
 
         const Messages = [
-            new Message({type:"text", direction:"incoming", time:"11:35", text:`shalom,
+            new Message({type:'text', direction:'incoming', time:'11:35', text:`shalom,
                 question: i you could be any character from Futurama who would you pick?
                 For me, I'dtotally choose Fry. I mean, waking up in the future and discovering all the crazy stuff that’s happened, plus all the wild adventures with Bender and Leela? That’d be epic! Plus, Fry’s got that laid-back vibe and gets to experience the future firsthand. 🍕🚀`}),
-            new Message({type:"image", direction:"incoming", time:"11:36", text:"./assets/images/message.jpg"}),
-            new Message({type:"text", direction:"outgoing", time:"12:00", text:"Futurama?!?!"}),
-            new Message({type:"text", direction:"outgoing", time:"12:00", text:"dude"}),
-            new Message({type:"text", direction:"outgoing", time:"12:00", text:"I'm an X-Men fan"})
+            new Message({type:'image', direction:'incoming', time:'11:36', text:'./assets/images/message.jpg'}),
+            new Message({type:'text', direction:'outgoing', time:'12:00', text:'Futurama?!?!'}),
+            new Message({type:'text', direction:'outgoing', time:'12:00', text:'dude'}),
+            new Message({type:'text', direction:'outgoing', time:'12:00', text:'I\'m an X-Men fan'})
         ]
 
-        const MessageInput = new Input({type:"message", name: 'message', label: '',modificator:'bottom',
+        const MessageInput = new Input({type:'message', name: 'message', label: '',modificator:'bottom',
         })
-        const SendButton = new Button({ text:"", mode:"secondary", modificator: "arrow-right", 
+        const SendButton = new Button({ text:'', mode:'secondary', modificator: 'arrow-right', 
             onClick: (e: Event) => {
                 e.preventDefault();
-                console.log("Send mesage button have been pressed");
+                console.log('Send mesage button have been pressed');
         
                 let messageInput = document.querySelector('.input_field_message') as HTMLInputElement;
                 if(messageInput){
-                    const error = !Validation.validate(messageInput.value, "message");
+                    const error = !Validation.validate(messageInput.value, 'message');
                     if(error) console.log('ooops, input is empty, we cant send empty message')
                     else{
                         console.log({messageInput:messageInput.value} );
@@ -118,30 +118,30 @@ export default class MessengerPage extends Block <IMessengerProps>{
     
     render(): string {
         return (`
-            <div class="messenger">
-                <aside class="messenger_asside asside">
-                    <div class="asside_header">
+            <div class='messenger'>
+                <aside class='messenger_asside asside'>
+                    <div class='asside_header'>
                         {{{ProfileButton}}}
                         {{{SearchInput}}}
                     </div>
-                    <div class="asside_list list">
+                    <div class='asside_list list'>
                         {{{ContactCards}}}
                     </div>
                 </aside>
-                <main class="messenger_main conversation">
-                    <div class="conversation_contact ">
-                        <img src="./assets/images/ava3.jpeg" alt="" class="conversation_avatar avatar">
+                <main class='messenger_main conversation'>
+                    <div class='conversation_contact '>
+                        <img src='./assets/images/ava3.jpeg' alt='' class='conversation_avatar avatar'>
                         Vadim
-                        <img src="./assets/icons/add-info.svg"/ alt="additional information" class="conversation_add-info svg">
+                        <img src='./assets/icons/add-info.svg'/ alt='additional information' class='conversation_add-info svg'>
                     </div>
 
-                    <div class="conversation_chat chat">
-                    <div class="chat_date">19 June</div>
+                    <div class='conversation_chat chat'>
+                    <div class='chat_date'>19 June</div>
                         {{{Messages}}}
                     </div>
 
-                    <div class="conversation_bottom bottom">
-                        <img class="bottom_clip svg" alt="clip" src="./assets/icons/clip.svg"/ >
+                    <div class='conversation_bottom bottom'>
+                        <img class='bottom_clip svg' alt='clip' src='./assets/icons/clip.svg'/ >
                         {{{MessageInput}}}
                         {{{SendButton}}}
                         

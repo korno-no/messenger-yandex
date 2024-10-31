@@ -1,5 +1,5 @@
-import Block from "../../core/block";
-import { BlockProps } from "../../core/block";
+import Block from '../../core/block';
+import { BlockProps } from '../../core/block';
 
 
 interface IInputProps extends BlockProps  {
@@ -26,8 +26,8 @@ class Input extends Block<IInputProps>{
     render(): string {
         return (`
                 <input
-                    class="input_field input_field_{{name}} input_field_{{modificator}}"
-                    placeholder=""
+                    class='input_field input_field_{{name}} input_field_{{modificator}}'
+                    placeholder=''
                     name = {{name}}
                     type = {{type}}
                     id = {{id}}

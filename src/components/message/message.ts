@@ -1,5 +1,5 @@
-import Block from "../../core/block";
-import { BlockProps } from "../../core/block";
+import Block from '../../core/block';
+import { BlockProps } from '../../core/block';
 
 
 interface IMessageProps extends BlockProps  {
@@ -23,20 +23,20 @@ export default class Message extends Block<IMessageProps>{
     }
 
     render(): string {
-        return (`<div class="message  message_{{direction}}" >
+        return (`<div class='message  message_{{direction}}' >
                     {{#if (eq type 'image')}}
-                        <div class="message_image">
-                            <img class="image" src={{text}} alt="message as picture">
+                        <div class='message_image'>
+                            <img class='image' src={{text}} alt='message as picture'>
 
                         </div>
                     {{/if}}
                     {{#if (eq type 'text')}}
-                        <div class="message_text">{{text}}</div>
+                        <div class='message_text'>{{text}}</div>
                     {{/if}}
-                    <div class="message_time">
+                    <div class='message_time'>
                         {{time}}
                         {{#if (eq direction 'outgoing')}}
-                            <img class="svg message_checked" src="./assets/icons/checks-double-v.svg"  alt="message have been read">
+                            <img class='svg message_checked' src='./assets/icons/checks-double-v.svg'  alt='message have been read'>
                         {{/if}}
                     </div>
                 </div>

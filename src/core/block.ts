@@ -1,5 +1,5 @@
-import EventBus from "./event-bus";
-import Handlebars from "handlebars";
+import EventBus from './event-bus';
+import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 
 type TEvents = Values<typeof Block.EVENTS>
@@ -19,10 +19,10 @@ export type BlockProps = {
 
 export default class Block<T extends BlockProps = BlockProps> {
     static EVENTS = {
-        INIT: "init",
-        FLOW_CDM: "flow:component-did-mount",
-        FLOW_CDU: "flow:component-did-update",
-        FLOW_RENDER: "flow:render"
+        INIT: 'init',
+        FLOW_CDM: 'flow:component-did-mount',
+        FLOW_CDU: 'flow:component-did-update',
+        FLOW_RENDER: 'flow:render'
     };
 
     private _element: HTMLElement | null = null;
@@ -139,7 +139,7 @@ export default class Block<T extends BlockProps = BlockProps> {
     }
 
     render(): string {
-        return "";
+        return '';
     }
 
     getContent() {
@@ -163,7 +163,7 @@ export default class Block<T extends BlockProps = BlockProps> {
         return new Proxy(props as T, {
             get(target, prop: string) {
                 const value = target[prop];
-                return typeof value === "function" ? value.bind(target) : value;
+                return typeof value === 'function' ? value.bind(target) : value;
             },
             set(target: T, prop: string, value) {
                 const oldTarget = { ...target };
@@ -173,7 +173,7 @@ export default class Block<T extends BlockProps = BlockProps> {
                 return true;
             },
             deleteProperty() {
-                throw new Error("Нет доступа");
+                throw new Error('Нет доступа');
             }
         });
     }
@@ -203,10 +203,10 @@ export default class Block<T extends BlockProps = BlockProps> {
         const propsAndStubs: { [key: string]: any } = { ...props };// copy props 
         //create stubs
         Object.entries(this.children).forEach(([key, child]) => { 
-            propsAndStubs[key] = `<div data-id="${child._id}"></div>`
+            propsAndStubs[key] = `<div data-id='${child._id}'></div>`
         });
         Object.entries(this.lists).forEach(([key]) => { 
-            propsAndStubs[key] = `<div data-id="${this._id}"></div>`
+            propsAndStubs[key] = `<div data-id='${this._id}'></div>`
         });
 
         const fragment = this._createDocumentElement('template') as HTMLTemplateElement; 
@@ -216,7 +216,7 @@ export default class Block<T extends BlockProps = BlockProps> {
         //switch stubs back to html element
         Object.values(this.children).forEach(child => { 
             const content = child.getContent();
-            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            const stub = fragment.content.querySelector(`[data-id='${child._id}']`);
             if (content && stub) {
                 stub.replaceWith(content);
             }
@@ -224,7 +224,7 @@ export default class Block<T extends BlockProps = BlockProps> {
         
         let block = fragment.content.firstElementChild as HTMLElement;
         Object.entries(this.lists).forEach(([_key, child]) => { 
-                const stub = fragment.content.querySelector( `[data-id="${this._id}"]`);
+                const stub = fragment.content.querySelector( `[data-id='${this._id}']`);
                 if(!stub) {
                     return
                 };
@@ -251,10 +251,10 @@ export default class Block<T extends BlockProps = BlockProps> {
     }
 
     show() {
-        this.getContent()!.style.display = "block";
+        this.getContent()!.style.display = 'block';
     }
 
     hide() {
-        this.getContent()!.style.display = "none";
+        this.getContent()!.style.display = 'none';
     }
 }

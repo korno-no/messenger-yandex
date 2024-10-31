@@ -6,10 +6,10 @@ type Options = {
 };
 
 enum METHOD {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 
 export default class HTTPTransport {
@@ -17,9 +17,9 @@ export default class HTTPTransport {
     const keys = Object.keys(data);
     return keys.reduce((result, key, index) => {
       return `${result}${key}=${data[key]}${
-        index < keys.length - 1 ? "&" : ""
+        index < keys.length - 1 ? '&' : ''
       }`;
-    }, "?");
+    }, '?');
   }
 
   get = (url: string, options: Options) =>

@@ -1,10 +1,10 @@
 
-import { Button } from "../../components"
-import { Input } from "../../components"
-import { InputWrapper } from "../../components"
-import { BlockProps } from "../../core/block";
-import Block from "../../core/block"
-import Validation from "../../utils/validation";
+import { Button } from '../../components'
+import { Input } from '../../components'
+import { InputWrapper } from '../../components'
+import { BlockProps } from '../../core/block';
+import Block from '../../core/block'
+import Validation from '../../utils/validation';
 
  interface IProfileProps extends BlockProps  {
     title: string;
@@ -17,22 +17,22 @@ export default class ProfilePage extends Block <IProfileProps>{
     constructor(props: IProfileProps) {
         super({
             ...props,
-            title: "Profile Page"
+            title: 'Profile Page'
         })
     }
     init(){
         const EmailInput= new InputWrapper({
             type:'email', 
-            name: "email", 
-            label: "email", 
+            name: 'email', 
+            label: 'email', 
             error: false,
             settings: {withInternalID: true},
             Input: new Input({
                 type:'email', 
-                name: "email", 
-                label: "email", 
+                name: 'email', 
+                label: 'email', 
                 id: 'EmailInput',
-                modificator: "wide",
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -42,16 +42,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const LoginInput= new InputWrapper({
             type:'text', 
-            name: "login", 
-            label: "login", 
+            name: 'login', 
+            label: 'login', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "login", 
-                label: "login", 
+                name: 'login', 
+                label: 'login', 
                 id: 'LoginInput',
-                modificator: "wide",
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -61,16 +61,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const FirstNameInput= new InputWrapper({
             type:'text', 
-            name: "first_name", 
-            label: "first name", 
+            name: 'first_name', 
+            label: 'first name', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "first_name", 
-                label: "first name",
+                name: 'first_name', 
+                label: 'first name',
                 id: 'FirstNameInput', 
-                modificator: "wide",
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -80,16 +80,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const SecondNameInput= new InputWrapper({
             type:'text', 
-            name: "second_name", 
-            label: "second name", 
+            name: 'second_name', 
+            label: 'second name', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "second_name", 
-                label: "second name", 
+                name: 'second_name', 
+                label: 'second name', 
                 id:'SecondNameInput',
-                modificator: "wide",
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -99,15 +99,15 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const NicknameInput= new InputWrapper({
             type:'text', 
-            name: "display_name", 
-            label: "nickname", 
+            name: 'display_name', 
+            label: 'nickname', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "display_name", 
-                label: "nickname", 
-                modificator: "wide",
+                name: 'display_name', 
+                label: 'nickname', 
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 id:'NicknameInput',
                 onBlur: (e: Event) =>{
@@ -118,16 +118,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const PhoneInput= new InputWrapper({
             type:'', 
-            name: "phone", 
-            label: "phone", 
+            name: 'phone', 
+            label: 'phone', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "phone", 
-                label: "phone", 
-                id: "PhoneInput",
-                modificator: "wide",
+                name: 'phone', 
+                label: 'phone', 
+                id: 'PhoneInput',
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -137,16 +137,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const PasswordInput = new InputWrapper({
             type:'password', 
-            name: "password", 
-            label: "password", 
+            name: 'password', 
+            label: 'password', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'password', 
-                name: "password", 
-                label: "password", 
-                id: "PasswordInput",
-                modificator: "wide",
+                name: 'password', 
+                label: 'password', 
+                id: 'PasswordInput',
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -155,13 +155,13 @@ export default class ProfilePage extends Block <IProfileProps>{
             }),
         });
         
-        const ChangeDataButton = new Button({mode: 'link',text: "change data", modificator:"wide", settings: {withInternalID: true},
+        const ChangeDataButton = new Button({mode: 'link',text: 'change data', modificator:'wide', settings: {withInternalID: true},
             onClick: (e: Event) => {
                 e.preventDefault();
                 this.OnChangeData()
             }
         });
-        const ChangePasswordButton = new Button({mode: 'link',text: "change password", modificator:"wide", settings: {withInternalID: true},
+        const ChangePasswordButton = new Button({mode: 'link',text: 'change password', modificator:'wide', settings: {withInternalID: true},
             onClick: (e: Event) => {
                 e.preventDefault();
             }
@@ -170,16 +170,16 @@ export default class ProfilePage extends Block <IProfileProps>{
 
         const OldPasswordInput = new InputWrapper({
             type:'password', 
-            name: "password", 
-            label: "password", 
+            name: 'password', 
+            label: 'password', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'password', 
-                name: "password", 
-                label: "password", 
-                id: "OldPasswordInput",
-                modificator: "wide",
+                name: 'password', 
+                label: 'password', 
+                id: 'OldPasswordInput',
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -189,16 +189,16 @@ export default class ProfilePage extends Block <IProfileProps>{
         });
         const NewPasswordInput = new InputWrapper({
             type:'password', 
-            name: "password", 
-            label: "password", 
+            name: 'password', 
+            label: 'password', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'password', 
-                name: "password", 
-                label: "password", 
-                id: "NewPasswordInput",
-                modificator: "wide",
+                name: 'password', 
+                label: 'password', 
+                id: 'NewPasswordInput',
+                modificator: 'wide',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -207,12 +207,12 @@ export default class ProfilePage extends Block <IProfileProps>{
             }),
         });
 
-        const ExitButton= new Button({mode: "link",text:"exit", modificator: "dangerous", settings: {withInternalID: true},
+        const ExitButton= new Button({mode: 'link',text:'exit', modificator: 'dangerous', settings: {withInternalID: true},
             onClick: (e: Event) => {
                 e.preventDefault();
             }
         });
-        const BackButton = new Button({mode:"secondary", modificator:"arrow-left" ,settings: {withInternalID: true},
+        const BackButton = new Button({mode:'secondary', modificator:'arrow-left' ,settings: {withInternalID: true},
             onClick: (e: Event) => {
                 e.preventDefault();
             }
@@ -236,7 +236,7 @@ export default class ProfilePage extends Block <IProfileProps>{
     }
 
     OnChangeData() {
-        console.log("we clicked OnChangeData")
+        console.log('we clicked OnChangeData')
         let inputsCollection = document.querySelectorAll('input');
         let filledValues: {[key: string]: string} = {};
         inputsCollection.forEach( input => {
@@ -253,13 +253,13 @@ export default class ProfilePage extends Block <IProfileProps>{
     
     render(): string {
         return (`
-            <div class="profile">
-            <aside class="profile_asside asside">
+            <div class='profile'>
+            <aside class='profile_asside asside'>
                  {{{BackButton}}}
             </aside>
-            <main class="profile_main">
-                <img class="profile_avatar avatar" alt="my avatar" src="./assets/images/profile.jpg"></img>
-                <form class="profile_form">
+            <main class='profile_main'>
+                <img class='profile_avatar avatar' alt='my avatar' src='./assets/images/profile.jpg'></img>
+                <form class='profile_form'>
 
                     {{{EmailInput}}}
                     {{{LoginInput}}}

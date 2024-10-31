@@ -1,6 +1,6 @@
-import { BlockProps } from "../../core/block";
-import { CoverScreen} from "../../components"
-import Block from "../../core/block"
+import { BlockProps } from '../../core/block';
+import { CoverScreen} from '../../components'
+import Block from '../../core/block'
 import backgroundImg from '../../assets/images/background.jpg'
 
 
@@ -10,13 +10,13 @@ export default class ErrorFixingPagePage extends Block <IErrorFixingPageProps>{
     constructor(props: IErrorFixingPageProps) {
         super({
             ...props,
-            title: "ErrorFixingPage Page"
+            title: 'ErrorFixingPage Page'
         })
         
     }
     init(){
         const ErrorScreen = new CoverScreen({ code: 500, background: backgroundImg,
-            text:"We are already fixing it"
+            text:'We are already fixing it'
         })
         
 

@@ -1,9 +1,9 @@
-import { Button } from "../../components"
-import { Input } from "../../components"
-import { InputWrapper } from "../../components"
-import { BlockProps } from "../../core/block";
-import Validation from "../../utils/validation";
-import Block from "../../core/block"
+import { Button } from '../../components'
+import { Input } from '../../components'
+import { InputWrapper } from '../../components'
+import { BlockProps } from '../../core/block';
+import Validation from '../../utils/validation';
+import Block from '../../core/block'
 
 
 
@@ -15,21 +15,21 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
     constructor(props: IRegistrationProps) {
         super({
             ...props,
-            title: "Registration Page"
+            title: 'Registration Page'
         })
         
     }
     init(){
         const EmailInput= new InputWrapper({
             type:'email', 
-            name: "email", 
-            label: "email", 
+            name: 'email', 
+            label: 'email', 
             error: false,
             settings: {withInternalID: true},
             Input: new Input({
                 type:'email', 
-                name: "email", 
-                label: "email", 
+                name: 'email', 
+                label: 'email', 
                 id: 'EmailInput',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
@@ -40,14 +40,14 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const LoginInput= new InputWrapper({
             type:'text', 
-            name: "login", 
-            label: "login", 
+            name: 'login', 
+            label: 'login', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "login", 
-                label: "login", 
+                name: 'login', 
+                label: 'login', 
                 id: 'LoginInput',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
@@ -58,14 +58,14 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const FirstNameInput= new InputWrapper({
             type:'text', 
-            name: "first_name", 
-            label: "first name", 
+            name: 'first_name', 
+            label: 'first name', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "first_name", 
-                label: "first name",
+                name: 'first_name', 
+                label: 'first name',
                 id: 'FirstNameInput', 
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
@@ -76,14 +76,14 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const SecondNameInput= new InputWrapper({
             type:'text', 
-            name: "second_name", 
-            label: "second name", 
+            name: 'second_name', 
+            label: 'second name', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "second_name", 
-                label: "second name", 
+                name: 'second_name', 
+                label: 'second name', 
                 settings: {withInternalID: true},
                 id:'SecondNameInput',
                 onBlur: (e: Event) =>{
@@ -94,15 +94,15 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const PhoneInput= new InputWrapper({
             type:'', 
-            name: "phone", 
-            label: "phone", 
+            name: 'phone', 
+            label: 'phone', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'text', 
-                name: "phone", 
-                label: "phone", 
-                id: "PhoneInput",
+                name: 'phone', 
+                label: 'phone', 
+                id: 'PhoneInput',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -112,15 +112,15 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const PasswordInput = new InputWrapper({
             type:'password', 
-            name: "password", 
-            label: "password", 
+            name: 'password', 
+            label: 'password', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'password', 
-                name: "password", 
-                label: "password", 
-                id: "PasswordInput",
+                name: 'password', 
+                label: 'password', 
+                id: 'PasswordInput',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -130,15 +130,15 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
         });
         const PasswordConfirmInput = new InputWrapper({
             type:'password', 
-            name: "password_confirm", 
-            label: "password confirm", 
+            name: 'password_confirm', 
+            label: 'password confirm', 
             error: false, 
             settings: {withInternalID: true},
             Input: new Input({
                 type:'password', 
-                name: "password_confirm", 
-                label: "password confirm", 
-                id: "PasswordConfirmInput",
+                name: 'password_confirm', 
+                label: 'password confirm', 
+                id: 'PasswordConfirmInput',
                 settings: {withInternalID: true},
                 onBlur: (e: Event) =>{
                     const value = (e.target as HTMLInputElement).value;
@@ -177,7 +177,7 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
 
     
     onSignUp(){
-        console.log("Button onSignUp have been clicked")
+        console.log('Button onSignUp have been clicked')
         let inputsCollection = document.querySelectorAll('input');
         let filledValues: {[key: string]: string} = {};
         inputsCollection.forEach( input => {
@@ -192,15 +192,15 @@ export default class RegistrationPage extends Block <IRegistrationProps>{
     }
 
     onSignIn() {
-        console.log("we clicked onSignIn")
+        console.log('we clicked onSignIn')
     }
     
     render(): string {
         return (`
-            <div class="wrapper">
-                    <div class="modal">
-                        <h1 class="wrapper_title">{{title}}</h1>
-                        <form class="registration_form">
+            <div class='wrapper'>
+                    <div class='modal'>
+                        <h1 class='wrapper_title'>{{title}}</h1>
+                        <form class='registration_form'>
                             {{{EmailInput}}}
                             {{{LoginInput}}}
                             {{{FirstNameInput}}}

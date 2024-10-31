@@ -1,8 +1,8 @@
 import './contact-card.css';
 //import Handlebars from 'handlebars';
 
-import { BlockProps } from "../../core/block";
-import Block from "../../core/block"
+import { BlockProps } from '../../core/block';
+import Block from '../../core/block'
 
 interface IContactCardProps extends BlockProps {
     name: string,
@@ -22,29 +22,29 @@ export default class ContactCard extends Block <IContactCardProps>{
     constructor(props: IContactCardProps) {
         super({
             ...props,
-            title: "Messenger Page"
+            title: 'Messenger Page'
         })
     }
 
     render(): string {
-        return (`<div class="contact-card contact-card_{{active}}">
-                    <img src={{avatar}} alt="Avatar" class="contact-card_avatar avatar">
-                    <div class="contact-card_info">
-                        <div class="contact-card_1-line">
-                            <div class="contact-card_name">  {{name}}</div>
-                            <div class="contact-card_date">{{date}}</div>
+        return (`<div class='contact-card contact-card_{{active}}'>
+                    <img src={{avatar}} alt='Avatar' class='contact-card_avatar avatar'>
+                    <div class='contact-card_info'>
+                        <div class='contact-card_1-line'>
+                            <div class='contact-card_name'>  {{name}}</div>
+                            <div class='contact-card_date'>{{date}}</div>
                         </div>
-                        <div class="contact-card_2-line">
+                        <div class='contact-card_2-line'>
 
-                            <div class="contact-card_message"> 
+                            <div class='contact-card_message'> 
                                 {{#if sender}}
                                     Me:
                                 {{/if}}
                                 {{message}}
                             </div>
                             {{#if amount}}
-                                <div class="contact-card_amount">
-                                    <div class="contact-card_amount-back">{{amount}}</div>
+                                <div class='contact-card_amount'>
+                                    <div class='contact-card_amount-back'>{{amount}}</div>
                                 </div>
                             {{/if}}
                         </div>

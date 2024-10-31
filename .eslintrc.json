@@ -6,6 +6,16 @@
     "no-unused-vars": 2,
     "max-len": [2, 100],
     "max-params": [2, 3],
-    "@typescript-eslint/no-unused-vars": 2
+    "@typescript-eslint/no-unused-vars": 2,
+    "import/extensions": [
+      "error",
+      "never",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }

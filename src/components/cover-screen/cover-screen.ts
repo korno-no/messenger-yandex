@@ -1,6 +1,6 @@
-import Block from "../../core/block";
-import { BlockProps } from "../../core/block";
-import { Button } from "../../components"
+import Block from '../../core/block';
+import { BlockProps } from '../../core/block';
+import { Button } from '../../components'
 
 
 
@@ -24,7 +24,7 @@ export default class CoverScreen extends Block<ICoverScreenProps>{
         
     }
     init(){
-       const BackButton = new Button({ mode:"link", text:"back to chat"})
+       const BackButton = new Button({ mode:'link', text:'back to chat'})
        
        this.children = {
         ...this.children,
@@ -35,12 +35,12 @@ export default class CoverScreen extends Block<ICoverScreenProps>{
     render(): string {
         return (`
             <div>
-                <img class="cover-screen_image" src="{{background}}" alt="">
-                <div class="cover-screen">
-                    <div class="cover-screen_content">
+                <img class='cover-screen_image' src='{{background}}' alt=''>
+                <div class='cover-screen'>
+                    <div class='cover-screen_content'>
                         <h1>{{code}}</h1>
                         <p>{{text}}</p>
-                        <div class="cover-screen_button">
+                        <div class='cover-screen_button'>
                             {{{BackButton}}}
                         </div>
                     </div>
