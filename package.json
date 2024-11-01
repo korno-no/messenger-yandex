@@ -12,15 +12,15 @@
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.12.2",
-    "@typescript-eslint/parser": "^8.12.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5.2.2",
+    "typescript": "5.1.6",
     "vite": "^5.4.10",
     "vite-tsconfig-paths": "^5.0.1"
   },
