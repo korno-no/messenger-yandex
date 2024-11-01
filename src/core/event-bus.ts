@@ -21,7 +21,7 @@ export default class EventBus<E extends string> {
       // throw new Error(`Нет события: ${event}`);
     }
     this.listeners[event]!.forEach((listener) => {
-      listener(...args);
+      listener(...args as Parameters<F>) ;
     });
   }
 }
