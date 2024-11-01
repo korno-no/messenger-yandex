@@ -1,8 +1,8 @@
+import Block, { BlockProps } from '@core/block';
+import Validation from '@utils/validation';
 import {
   Button, Input, InputWrapper, ContactCard, Message,
 } from '../../components';
-import Block, { BlockProps } from '@core/block';
-import Validation from '@utils/validation';
 
 import ava1 from '../../assets/images/ava1.jpeg';
 import ava2 from '../../assets/images/ava2.jpeg';
