@@ -1,24 +1,23 @@
-import Block from '../../../core/block';
-import { BlockProps } from '../../../core/block';
+import Block, { BlockProps } from '@core/block';
+import './input-wrapper.css';
 
-
-interface IInputProps extends BlockProps  {
+interface IInputProps extends BlockProps {
     error: boolean;
     label: string;
     name: string;
     type: string;
-    modificator?:  string;
+    modificator?: string;
 }
 
-class InputWrapper extends Block<IInputProps>{
-    constructor(props: IInputProps) {
-        super({
-            ...props
-        })
-    }
+class InputWrapper extends Block<IInputProps> {
+  constructor(props: IInputProps) {
+    super({
+      ...props,
+    });
+  }
 
-    render(): string {
-        return (`
+  render(): string {
+    return (`
             <div class='input input_{{modificator}}' >
                 <label class='input_container' for='{{name}}'>
                 {{#if error}}
@@ -31,8 +30,8 @@ class InputWrapper extends Block<IInputProps>{
                 {{/unless}}
                 </label>
             </div>
-            `)
-    }
-};
+            `);
+  }
+}
 
 export default InputWrapper;

@@ -1,29 +1,27 @@
-import Block from '../../core/block';
-import { BlockProps } from '../../core/block';
-
+import Block, { BlockProps } from '@core/block';
+import './button.css';
 
 interface IButtonProps extends BlockProps {
     mode?: 'primary' | 'link' | 'secondary';
     type?: 'submit' | 'text';
     text?: string;
     modificator?: string;
-    onClick?: (e: Event) => void;
-    events?: { [key: string]: EventListenerOrEventListenerObject };
+    onClick?: (_event: Event) => void;
+    events?: { [key: string]: EventListener };
 }
 
 class Button extends Block<IButtonProps> {
-    constructor(props: IButtonProps) {
-        super({
-            ...props,
-            events: {
-                click: props.onClick ?? ((e) => { e })
-            }
-        })
+  constructor(props: IButtonProps) {
+    super({
+      ...props,
+      events: {
+        click: props.onClick as EventListener,
+      },
+    });
+  }
 
-    }
-
-    render(): string {
-        return (`<button class='button button_{{mode}} button_{{mode}}_{{modificator}}' type='{{type}}'>
+  render(): string {
+    return (`<button class='button button_{{mode}} button_{{mode}}_{{modificator}}' type='{{type}}'>
                     {{#if (eq modificator 'arrow-right')}}
                         <img class='svg' src='./assets/icons/arrow-right.svg' alt='arror right'>
                     {{/if}}
@@ -32,7 +30,7 @@ class Button extends Block<IButtonProps> {
                     {{/if}}
                     {{text}}
                 </button>
-            `)
-    }
-};
+            `);
+  }
+}
 export default Button;

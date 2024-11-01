@@ -8,42 +8,41 @@ declare global {
 }
 
 const pages = {
-  'login': [ Pages.LoginPage ],
-  'nav': [ Pages.NavigatePage ],
-  'registration': [ Pages.RegistrationPage ],
-  'messenger': [ Pages.MessengerPage ],
-  'profile': [ Pages.ProfilePage ],
-  '404': [ Pages.ErrorPage ],
-  '500': [ Pages.ErrorFixingPage ],
+  login: [Pages.LoginPage],
+  nav: [Pages.NavigatePage],
+  registration: [Pages.RegistrationPage],
+  messenger: [Pages.MessengerPage],
+  profile: [Pages.ProfilePage],
+  404: [Pages.ErrorPage],
+  500: [Pages.ErrorFixingPage],
 };
 
-
-Object.entries(Components).forEach(([ name, component ]) => {
+Object.entries(Components).forEach(([name, component]) => {
   if (typeof component === 'string') {
     Handlebars.registerPartial(name, component);
   }
 });
 
 function navigate(page: string) {
-  //@ts-ignore
-  const [ source, context ] = pages[page];
+  // @ts-ignore
+  const [Source, context] = pages[page];
   const container = document.getElementById('app')!;
 
-  if(source instanceof Object) {
-    const page = new source(context);
+  if (Source instanceof Object) {
+    const newPage = new Source(context);
     container.innerHTML = '';
-    container.append(page.getContent());
+    container.append(newPage.getContent());
     // page.dispatchComponentDidMount();
     return;
   }
 
-  container.innerHTML = Handlebars.compile(source)(context);
+  container.innerHTML = Handlebars.compile(Source)(context);
 }
 
 document.addEventListener('DOMContentLoaded', () => navigate('nav'));
 
-document.addEventListener('click', e => {
-  //@ts-ignore
+document.addEventListener('click', (e) => {
+  // @ts-ignore
   const page = e.target.getAttribute('page');
   if (page) {
     navigate(page);
@@ -53,8 +52,4 @@ document.addEventListener('click', e => {
   }
 });
 
-
-
-Handlebars.registerHelper('eq', function(arg1, arg2) {
-  return arg1 === arg2;
-});
+Handlebars.registerHelper('eq', (arg1, arg2) => arg1 === arg2);

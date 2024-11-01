@@ -6,7 +6,11 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "baseUrl": "./src",
-   
+    "paths": {
+      "@core/*": ["core/*"], 
+      "@utils/*": ["utils/*"]
+    },
+    "esModuleInterop": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -23,5 +27,5 @@
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [ "src/**/*" ]
 }

@@ -1,5 +1,5 @@
-import './registration.css'
-//export { default as RegistrationPage } from './registration.hbs?raw';
+import './registration.css';
+// export { default as RegistrationPage } from './registration.hbs?raw';
 import RegistrationPage from './registration';
-export default  RegistrationPage          
 
+export default RegistrationPage;

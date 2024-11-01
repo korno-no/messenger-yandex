@@ -2,3 +2,5 @@
 /dist
 **/*.min.js
 /node_modules 
+/src/utils
+/src/core

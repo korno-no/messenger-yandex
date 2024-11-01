@@ -2,20 +2,44 @@
   "extends": "airbnb-base",
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
+
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"},
+  
+  "env":    {
+    "browser": true,
+    "es6": true
+  },
   "rules": {
-    "no-unused-vars": 2,
     "max-len": [2, 100],
     "max-params": [2, 3],
-    "@typescript-eslint/no-unused-vars": 2,
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
+   "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
-      "never",
+      "always",
       {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
+        "ts": "never", // Если ты хочешь, чтобы .ts не указывались
+        "js": "never" // То же для .js
+       
       }
     ]
+  },
+  "globals": {
+        "EventListener": "readonly",
+        "HTMLElementEventMap": "readonly"
+    },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+
+      } 
+    }
   }
 }

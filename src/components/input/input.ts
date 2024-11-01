@@ -1,30 +1,28 @@
-import Block from '../../core/block';
-import { BlockProps } from '../../core/block';
+import Block, { BlockProps } from '@core/block';
+import './input.css';
 
-
-interface IInputProps extends BlockProps  {
+interface IInputProps extends BlockProps {
     label: string;
     name: string;
     type: string;
-    modificator?:  string;
-    onBlur?: (e: Event) => void;
-    events?: { [key: string]: EventListenerOrEventListenerObject };
+    modificator?: string;
+    onBlur?: (_e: Event) => void;
+    events?: { [key: string]: EventListener };
     id?: string,
 }
 
-class Input extends Block<IInputProps>{
-    constructor(props: IInputProps) {
-        super({
-            ...props,
-            events: {
-                blur: props.onBlur ?? (() => {}) 
-            }
-        })
-    }
-    
+class Input extends Block<IInputProps> {
+  constructor(props: IInputProps) {
+    super({
+      ...props,
+      events: {
+        blur: props.onBlur ?? (() => {}),
+      },
+    });
+  }
 
-    render(): string {
-        return (`
+  render(): string {
+    return (`
                 <input
                     class='input_field input_field_{{name}} input_field_{{modificator}}'
                     placeholder=''
@@ -32,8 +30,8 @@ class Input extends Block<IInputProps>{
                     type = {{type}}
                     id = {{id}}
                 />
-            `)
-    }
-};
+            `);
+  }
+}
 
 export default Input;

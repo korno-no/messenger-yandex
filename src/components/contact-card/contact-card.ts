@@ -1,8 +1,5 @@
+import Block, { BlockProps } from '@core/block';
 import './contact-card.css';
-//import Handlebars from 'handlebars';
-
-import { BlockProps } from '../../core/block';
-import Block from '../../core/block'
 
 interface IContactCardProps extends BlockProps {
     name: string,
@@ -14,20 +11,20 @@ interface IContactCardProps extends BlockProps {
     active: boolean,
     avatar: string
     settings: {withInternalID: true},
-    onClick?: (event: Event) => void;
-    events?: { [key: string]: EventListenerOrEventListenerObject };
+    onClick?: () => void;
+    events?: { [key: string]: EventListener };
 }
 
-export default class ContactCard extends Block <IContactCardProps>{
-    constructor(props: IContactCardProps) {
-        super({
-            ...props,
-            title: 'Messenger Page'
-        })
-    }
+class ContactCard extends Block <IContactCardProps> {
+  constructor(props: IContactCardProps) {
+    super({
+      ...props,
+      title: 'Messenger Page',
+    });
+  }
 
-    render(): string {
-        return (`<div class='contact-card contact-card_{{active}}'>
+  render(): string {
+    return (`<div class='contact-card contact-card_{{active}}'>
                     <img src={{avatar}} alt='Avatar' class='contact-card_avatar avatar'>
                     <div class='contact-card_info'>
                         <div class='contact-card_1-line'>
@@ -50,8 +47,7 @@ export default class ContactCard extends Block <IContactCardProps>{
                         </div>
                     </div>
                 </div>
-            `)
-    }
-  
+            `);
+  }
 }
-
+export default ContactCard;
