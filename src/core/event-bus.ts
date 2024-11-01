@@ -1,27 +1,28 @@
-export default class EventBus<E extends string> {
-  listeners: { [key in E]?: Array<(...args: unknown[]) => void> } = {};
+type TCallback = (...args: any[]) => void; // Accepts any arguments
+type TListeners = { [event: string]: Array<TCallback> };
 
-  on(event: E, callback: (...args: unknown[]) => void) {
+export default class EventBus<E extends string> {
+  // Initialize listeners with TListeners type
+  private listeners: TListeners = {}; 
+  on(event: E, callback: TCallback) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
-        this.listeners[event]!.push(callback);
+    this.listeners[event]!.push(callback);
   }
 
-  off(event: E, callback: (...args: unknown[]) => void) {
+  off(event: E, callback: TCallback) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
     this.listeners[event] = this.listeners[event]!.filter((listener) => listener !== callback);
   }
 
-  emit(event: E, ...args: unknown []) {
-    if (!this.listeners[event]) {
+  emit(event: keyof TListeners, ...args: any[]) {    if (!this.listeners[event]) {
       return;
-      // throw new Error(`Нет события: ${event}`);
     }
     this.listeners[event]!.forEach((listener) => {
-      listener(...args) ;
+      listener(...args);
     });
   }
 }
