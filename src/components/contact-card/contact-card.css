@@ -8,6 +8,7 @@
     overflow: hidden;
    
 }
+
 .contact-card_info{
     display: flex;
     padding: 0 10px;
@@ -15,19 +16,23 @@
     width:100%;
   
 }
+
 .contact-card_1-line, .contact-card_2-line{
     display: flex;
 }
+
 .avatar{
     border: black solid 1px;
     border-radius: 50%;
     height: 60px;
     width:60px;
 }
+
 .contact-card_message{
     font-size: 14px;
     height: auto;
 }
+
 .contact-card_name{
     font-weight: 600;
 }
@@ -45,6 +50,7 @@
     margin-top: auto;
     margin-bottom:auto ;
 }
+
 .contact-card_amount-back{
     width: 25px; 
     height: 25px;

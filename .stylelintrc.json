@@ -1,0 +1,14 @@
+{
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "selector-class-pattern": "[a-z0-9]+([-_][a-z0-9]+)*$",
+        "no-descending-specificity": null,
+        "keyframe-block-no-duplicate-selectors": null
+
+
+    },
+    "ignoreFiles": [
+        "dist/*",
+        "dist/**/*.css"
+    ]
+} 

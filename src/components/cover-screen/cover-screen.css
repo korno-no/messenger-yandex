@@ -6,12 +6,14 @@
     align-items: center;
     position: relative;  
 }
+
 .cover-screen_content {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Align content to the right */
     z-index: 10; /* Ensure content is on top of the image */
 }
+
 .cover-screen_image{
     position: absolute;
     left: 650px;
