@@ -12,6 +12,8 @@ enum METHOD {
   DELETE = 'DELETE',
 }
 
+type HTTPMethod = <R=unknown>(url: string, options: Options) => Promise<R>
+
 export default class HTTPTransport {
   queryStringify(data: { [key: string]: unknown }) {
     const keys = Object.keys(data);
@@ -20,7 +22,7 @@ export default class HTTPTransport {
     }`, '?');
   }
 
-  get = (url: string, options: Options) => this.request(
+  get:HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHOD.GET },
     options.timeout,
@@ -44,26 +46,38 @@ export default class HTTPTransport {
     options.timeout,
   );
 
-  request = (url: string, options: Options, timeout = 5000) => {
-    // i know its stupid, but build is not working if i havent use this timeout((()))
+  request = <R = unknown>(url: string, options: Options, timeout = 5000): Promise<R> => {
     console.log(timeout);
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(options.method, options.method === METHOD.GET && !!options.data
         ? `${url}${this.queryStringify(options.data)}`
         : url);
-
+  
       if (options.headers) {
         options.headers.forEach(([key, value]) => {
           xhr.setRequestHeader(key, value);
         });
       }
-      xhr.onload = () => { resolve(xhr); };
-
-      xhr.onerror = reject;
+  
+      xhr.onload = () => {
+        try {
+          const response = JSON.parse(xhr.responseText) as R;
+          resolve(response);
+        } catch (error) {
+          reject(error);
+        }
+      };
+  
+      xhr.onerror = () => {
+        reject(new Error('Network error')); 
+      };
+  
       xhr.timeout = timeout;
-      xhr.ontimeout = reject;
-
+      xhr.ontimeout = () => {
+        reject(new Error('Request timed out')); 
+      };
+  
       if (options.method === METHOD.GET || !options.data) {
         xhr.send();
       } else if (options.data) {

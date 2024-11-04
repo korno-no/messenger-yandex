@@ -221,7 +221,7 @@ export default class MessengerPage extends Block <IMessengerProps> {
                 </aside>
                 <main class='messenger_main conversation'>
                     <div class='conversation_contact '>
-                        <img src='./assets/images/ava3.jpeg' alt='' 
+                        <img src='./assets/images/ava3.jpeg' alt='avatar' 
                         class='conversation_avatar avatar'>
                         Vadim
                         <img src='./assets/icons/add-info.svg'/ 
