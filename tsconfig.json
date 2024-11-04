@@ -5,8 +5,12 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
-    /* Bundler mode */
+    "baseUrl": "./src",
+    "paths": {
+      "@core/*": ["core/*"], 
+      "@utils/*": ["utils/*"]
+    },
+    "esModuleInterop": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -14,11 +18,14 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Linting */
+    
     "strict": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [ "src/**/*" ]
 }
