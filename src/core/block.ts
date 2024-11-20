@@ -261,7 +261,7 @@ class Block<T extends BlockProps = BlockProps> {
   show() {
     const element = this.getContent() as HTMLElement;
     if(element){
-      element.style.display = 'block';
+      element.style.display = '';
     }
   }
 
