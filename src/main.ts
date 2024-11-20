@@ -35,19 +35,14 @@ const store = new Store({
 })
 window.store = store;
 
-//@ts-ignore
 router.use('/', Pages.LoginPage )
-//@ts-ignore
 .use('/registration', Pages.RegistrationPage)
-//@ts-ignore
 .use('/messenger', Pages.MessengerPage)
-//@ts-ignore
 .use('/profile', Pages.ProfilePage)
-//@ts-ignore
 .use('/404', Pages.ErrorPage)
-//@ts-ignore
 .use('/500', Pages.ErrorFixingPage)
 .start();
+
 
 
 export enum Page {
@@ -58,6 +53,11 @@ export enum Page {
   notFoundError = "/404",
   serverError = "/500",
 }
+
+if(!window.store.storeUser){
+  window.router.go(Page.login)
+}
+
 
 
 
