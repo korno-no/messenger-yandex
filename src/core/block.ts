@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './event-bus';
+import isEqual from '@utils/isEqual';
 
 type TEvents = Values<typeof Block.EVENTS>
 type PropsWithChildren<T> = T & { [key: string]: any | (Block<any> | Partial<T>)[]; };
@@ -25,16 +26,11 @@ class Block<T extends BlockProps = BlockProps> {
   };
 
   private _element: HTMLElement | null = null;
-
   _meta = null;
-
   _id: string;
-
   children;
-
   lists;
-
-  name: string;
+  name!: string;
 
   // private _eventbus;
   protected props: T;
@@ -49,10 +45,11 @@ class Block<T extends BlockProps = BlockProps> {
     // create a proxy that allows events to be triggered
     this._id = makeUUID();
     this.props = this._makePropsProxy({ ...props, __id: this._id });
-    this.children = children;
+  
     this.lists = this._makePropsProxy(lists);
+    this.children = children;
 
-    this.name = '';
+     
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
 
@@ -98,6 +95,7 @@ class Block<T extends BlockProps = BlockProps> {
   }
 
   _componentDidUpdate(oldProps: T, newProps: T) {
+ 
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -106,8 +104,7 @@ class Block<T extends BlockProps = BlockProps> {
   }
 
   componentDidUpdate(_oldProps: T, _newProps: T) {
-    console.log(_oldProps, _newProps);
-    return true;
+    return !isEqual(_oldProps, _newProps);
   }
 
   _getChildrenAndProps(propsAndChildren: PropsWithChildren<T>) {
@@ -116,9 +113,10 @@ class Block<T extends BlockProps = BlockProps> {
     const lists: Record<string, Block<any>[]> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
+
+      if (value instanceof Block && !key.startsWith("store")) {
         children[key] = value;
-      } else if (Array.isArray(value)) {
+      } else if (Array.isArray(value) && !key.startsWith("store")) {
         lists[key] = value;
       } else {
         props[key as keyof T] = value as T[keyof T];
@@ -140,10 +138,13 @@ class Block<T extends BlockProps = BlockProps> {
   }
 
   _render() {
+    
     const templateString: string = this.render();// get template of component as string
     this.compile(templateString, { ...this.props });
     this._removeEvents();
     this._addEvents();
+    console.log(this._element)
+    //debugger
   }
 
   render(): string {
@@ -160,7 +161,7 @@ class Block<T extends BlockProps = BlockProps> {
         }
       }, 100);
     }
-
+    
     return this._element;
   }
 
@@ -230,13 +231,11 @@ class Block<T extends BlockProps = BlockProps> {
       }
     });
 
-    let block = fragment.content.firstElementChild as HTMLElement;
+    const block = fragment.content.firstElementChild as HTMLElement;
+
     Object.entries(this.lists).forEach(([_key, child]) => {
-      const stub = fragment.content.querySelector(`[data-id='${this._id}']`);
-      if (!stub) {
-        return;
-      }
       const listContent = this._createDocumentElement('template') as HTMLTemplateElement;
+
       (child as Array<{ getContent: () => any; } | null>)?.forEach((item) => {
         if (item instanceof Block && item !== null) {
           const content = item.getContent();
@@ -244,25 +243,33 @@ class Block<T extends BlockProps = BlockProps> {
             listContent.content.append(content);
           }
         } else {
-          listContent.content.append(`${item}`);
+          //listContent.content.append(`${item}`);
         }
       });
+      const stub = fragment.content.querySelector(`[data-id='${this._id}']`);
       if (listContent && stub) {
-        stub.replaceWith(listContent.content);
-        block = fragment.content as unknown as HTMLElement;
+        stub.replaceWith(listContent.content);;
       }
     });
     // insert created elemnt into DOM
-    this._element?.replaceWith(block);
+    if (this._element && block) {
+      this._element.replaceWith(block);
+    }
     this._element = block as HTMLElement;
   }
 
   show() {
-        this.getContent()!.style.display = 'block';
+    const element = this.getContent() as HTMLElement;
+    if(element){
+      element.style.display = 'block';
+    }
   }
 
   hide() {
-        this.getContent()!.style.display = 'none';
+    const element = this.getContent() as HTMLElement;
+    if(element){
+      element.style.display = 'none';
+    } 
   }
 }
 export default Block;

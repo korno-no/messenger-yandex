@@ -1,6 +1,12 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { Button, Input, InputWrapper } from 'components';
+import { User } from "@utils/types";
+import { AuthAction } from 'actions/auth-actions';
+import { Page } from 'main';
+
+
+
 
  interface IRegistrationProps extends BlockProps {
 
@@ -144,10 +150,11 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
     const ButtonSignUp = new Button({
       mode: 'primary',
       text: 'Sign up',
+      type: 'submit',
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.onSignUp();
+        this.onSignUp(e);
       },
     });
     const ButtonSignIn = new Button({
@@ -156,7 +163,7 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.onSignIn();
+        this.onSignIn(e);
       },
     });
 
@@ -174,23 +181,26 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
     };
   }
 
-  onSignUp() {
-    console.log('Button onSignUp have been clicked');
-    const inputsCollection = document.querySelectorAll('input');
-    const filledValues: {[key: string]: string} = {};
-    inputsCollection.forEach((input) => {
-      filledValues[input.id] = input.value;
-      if (input.id && input.id !== '/') {
-        const error = !Validation.validate(input.value, input.name);
-        // TODO: add check if error have been changed
-        this.children[input.id].setProps({ error });
-      }
-    });
-    console.log(filledValues);
+  onSignUp(event: Event) {
+    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as User;
+    const invalidFields = Validation.validateFrom(data);
+    if(invalidFields.length > 0){
+      Object.values(this.children).forEach( child => {
+        if(child.name && invalidFields.includes(child.name)){
+          child.setProps({ error: true });
+        } 
+      })
+    }
+    else{ 
+      const authAction = new AuthAction();
+      authAction.createNewUser(data);
+    }
   }
 
-  onSignIn() {
-    console.log('we clicked onSignIn');
+  onSignIn(event: Event) {
+     window.router.go(Page.login)
   }
 
   render(): string {
@@ -198,7 +208,7 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
             <div class='wrapper'>
                     <div class='modal'>
                         <h1 class='wrapper_title'>{{title}}</h1>
-                        <form class='registration_form'>
+                        <form class='registration_form' id='registrationForm'>
                             {{{EmailInput}}}
                             {{{LoginInput}}}
                             {{{FirstNameInput}}}

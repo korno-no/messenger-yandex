@@ -1,8 +1,11 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { Button, Input, InputWrapper } from '../../components';
+import { SignIn } from "@utils/types";
+import { AuthAction } from 'actions/auth-actions';
 
- interface ILoginProps extends BlockProps {
+
+interface ILoginProps extends BlockProps {
     title: string;
     settings: {withInternalID: true},
     onClick?: () => void;
@@ -10,13 +13,16 @@ import { Button, Input, InputWrapper } from '../../components';
 }
 
 export default class LoginPage extends Block <ILoginProps> {
+  authAction= new AuthAction();
   constructor(props: ILoginProps) {
     super({
       ...props,
       title: 'Login Page',
     });
-  }
+  this.authAction.getCurrentUser()
 
+  }
+  
   init() {
     const LoginInput = new InputWrapper({
       type: 'text',
@@ -61,7 +67,7 @@ export default class LoginPage extends Block <ILoginProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.onSignIn();
+        this.onSignIn(e);
       },
     });
     const ButtonSignUp = new Button({
@@ -82,23 +88,26 @@ export default class LoginPage extends Block <ILoginProps> {
     };
   }
 
-  onSignIn() {
-    console.log('we clicked onSignIn');
-    const inputsCollection = document.querySelectorAll('input');
-    const filledValues: {[key: string]: string} = {};
-    inputsCollection.forEach((input) => {
-      filledValues[input.id] = input.value;
-      if (input.id && input.id !== '/') {
-        const error = !Validation.validate(input.value, input.name);
-        // TODO: add check if error have been changed
-        this.children[input.id].setProps({ error });
-      }
-    });
-    console.log(filledValues);
+  onSignIn(event: Event) {
+    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as SignIn;
+    const invalidFields = Validation.validateFrom(data);
+    if(invalidFields.length > 0){
+      Object.values(this.children).forEach( child => {
+        if(child.name && invalidFields.includes(child.name)){
+          child.setProps({ error: true });
+        } 
+      })
+    }
+    else{ 
+      this.authAction.signin(data);
+    }
   }
 
+
   onSignUp() {
-    console.log('we clicked onSignUp');
+    window.router.go('/registration')
   }
 
   render(): string {

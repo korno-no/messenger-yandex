@@ -19,6 +19,10 @@
     flex-direction: column;
 }
 
+.asside_list.list {
+    max-height: calc(100vh - 125px); 
+    overflow-y: auto; 
+}
 .asside_header{
     padding: 10px;
     background-image: url('../../assets/images/background.jpg');
@@ -29,56 +33,6 @@
     height: 125px; 
 }
 
-.conversation_contact{
-    display: flex;
-    align-items: center;
-    padding : 10px;
-    border-bottom: black solid 1px;
-}
-
-.conversation_avatar{
-    margin-right: 10px;
-}
-
-.conversation_add-info{
-    margin-left: auto;
-}
-
-.svg{
-    height:25px;
-}
-
-.conversation_bottom{
+.header_buttons{
     display:flex;
-    align-items: center;
-    margin-top: 5px;
-    border-top: black solid 1px; 
-    padding: 0 10px; 
-}
-
-.bottom_clip, .bottom_send{
-    flex: 0 0 auto;
-}
-
-.bottom_input{
-    flex: 1;
-    margin: 0 10px;
-}
-
-.chat{
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
-    max-height: calc(100vh - 125px);
-    overflow-y: auto; 
-}
-
-.chat_date{
-    text-align: center;
-    font-size: 12px;
-}
-
-.asside_list.list {
-    max-height: calc(100vh - 125px); 
-    overflow-y: auto; 
 }

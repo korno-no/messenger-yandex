@@ -21,12 +21,16 @@ class Button extends Block<IButtonProps> {
   }
 
   render(): string {
-    return (`<button class='button button_{{mode}} button_{{mode}}_{{modificator}}' type='{{type}}'>
+    return (`<button class='button button_{{mode}} button_{{modificator}}' type='{{type}}'>
                     {{#if (eq modificator 'arrow-right')}}
                         <img class='svg' src='./assets/icons/arrow-right.svg' alt='arror right'>
                     {{/if}}
                     {{#if (eq modificator 'arrow-left')}}
                         <img class='svg' src='./assets/icons/arrow-left.svg' alt='arror left'>
+                    {{/if}}
+                    {{#if (eq modificator 'additional-info')}}
+                      <img src='./assets/icons/add-info.svg'/ 
+                        alt='additional information' class='conversation_add-info svg img-btn'>
                     {{/if}}
                     {{text}}
                 </button>

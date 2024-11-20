@@ -14,6 +14,7 @@ class InputWrapper extends Block<IInputProps> {
     super({
       ...props,
     });
+    this.name = props.name;
   }
 
   render(): string {

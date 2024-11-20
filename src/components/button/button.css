@@ -35,6 +35,7 @@
     justify-content: center; 
 }
 
-.button_text_pull-right{
+.button_pull-right, .button_additional-info{
     margin-left: auto
 }
+

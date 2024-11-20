@@ -2,29 +2,39 @@ import Block, { BlockProps } from '@core/block';
 import './contact-card.css';
 
 interface IContactCardProps extends BlockProps {
+    chatId: number,
     name: string,
-    message: string,
-    sender: number,
-    isRead: boolean,
-    amount: number,
-    date: string,
-    active: boolean,
+    created_by: number,
+    last_message: string,
+    sender?: number,
+    isRead?: boolean,
+    unread_count: number,
+    date?: string,
+    active?: boolean,
     avatar: string
-    settings: {withInternalID: true},
-    onClick?: () => void;
+    settings?: {withInternalID: true},
+    onClick?: (e: Event) => void;
     events?: { [key: string]: EventListener };
+
 }
 
 class ContactCard extends Block <IContactCardProps> {
+    
   constructor(props: IContactCardProps) {
     super({
       ...props,
-      title: 'Messenger Page',
+      events: {
+        click: props.onClick as EventListener,
+      },
     });
+    
   }
+  
 
   render(): string {
+    
     return (`<div class='contact-card contact-card_{{active}}'>
+                    {{{DeleteChatButton}}}
                     <img src={{avatar}} alt='Avatar' class='contact-card_avatar avatar'>
                     <div class='contact-card_info'>
                         <div class='contact-card_1-line'>
@@ -37,11 +47,11 @@ class ContactCard extends Block <IContactCardProps> {
                                 {{#if sender}}
                                     Me:
                                 {{/if}}
-                                {{message}}
+                                {{last_message}}
                             </div>
-                            {{#if amount}}
+                            {{#if unread_count}}
                                 <div class='contact-card_amount'>
-                                    <div class='contact-card_amount-back'>{{amount}}</div>
+                                    <div class='contact-card_amount-back'>{{unread_count}}</div>
                                 </div>
                             {{/if}}
                         </div>

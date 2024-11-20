@@ -1,17 +1,26 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { Button, Input, InputWrapper } from '../../components';
+import { AuthAction } from 'actions/auth-actions';
+import { ProfileActions } from 'actions/profile-actions';
+import { Page } from 'main';
+import connect from '@core/connect';
+import { User,PasswordUpdate } from '@utils/types';
 
  interface IProfileProps extends BlockProps {
+    storeUser?: User;
     title: string;
     settings: {withInternalID: true},
 }
 
-export default class ProfilePage extends Block <IProfileProps> {
+class ProfilePage extends Block <IProfileProps> {
+  authAction = new AuthAction()
+  profileActions = new ProfileActions()
   constructor(props: IProfileProps) {
     super({
       ...props,
       title: 'Profile Page',
+
     });
   }
 
@@ -28,6 +37,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'email',
         id: 'EmailInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.email,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -47,6 +57,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'login',
         id: 'LoginInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.login,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -66,6 +77,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'first name',
         id: 'FirstNameInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.first_name,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -85,6 +97,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'second name',
         id: 'SecondNameInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.second_name,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -103,6 +116,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         name: 'display_name',
         label: 'nickname',
         modificator: 'wide',
+        value: this.props?.storeUser?.display_name,
         settings: { withInternalID: true },
         id: 'NicknameInput',
         onBlur: (e: Event) => {
@@ -123,6 +137,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'phone',
         id: 'PhoneInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.phone,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -142,6 +157,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'password',
         id: 'PasswordInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.password,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -157,7 +173,7 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.OnChangeData();
+        this.OnChangeData(e);
       },
     });
     const ChangePasswordButton = new Button({
@@ -167,18 +183,19 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.OnChangePassword(e)
       },
     });
 
     const OldPasswordInput = new InputWrapper({
       type: 'password',
-      name: 'password',
+      name: 'oldPassword',
       label: 'password',
       error: false,
       settings: { withInternalID: true },
       Input: new Input({
         type: 'password',
-        name: 'password',
+        name: 'oldPassword',
         label: 'password',
         id: 'OldPasswordInput',
         modificator: 'wide',
@@ -191,13 +208,13 @@ export default class ProfilePage extends Block <IProfileProps> {
     });
     const NewPasswordInput = new InputWrapper({
       type: 'password',
-      name: 'password',
+      name: 'newPassword',
       label: 'password',
       error: false,
       settings: { withInternalID: true },
       Input: new Input({
         type: 'password',
-        name: 'password',
+        name: 'newPassword',
         label: 'password',
         id: 'NewPasswordInput',
         modificator: 'wide',
@@ -216,6 +233,7 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.authAction.logout();
       },
     });
     const BackButton = new Button({
@@ -224,6 +242,7 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        window.router.go(Page.messenger)
       },
     });
     this.children = {
@@ -244,30 +263,56 @@ export default class ProfilePage extends Block <IProfileProps> {
     };
   }
 
-  OnChangeData() {
-    console.log('we clicked OnChangeData');
-    const inputsCollection = document.querySelectorAll('input');
-    const filledValues: {[key: string]: string} = {};
-    inputsCollection.forEach((input) => {
-      filledValues[input.id] = input.value;
-      if (input.id && input.id !== '/') {
-        const error = !Validation.validate(input.value, input.name);
-        // TODO: add check if error have been changed
-        this.children[input.id].setProps({ error });
-      }
-    });
-    console.log(filledValues);
+  OnChangeData(event: Event) {
+    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as User;
+    const invalidFields = Validation.validateFrom(data);
+    if(invalidFields.length > 0){
+      Object.values(this.children).forEach( child => {
+        if(child.name && invalidFields.includes(child.name)){
+          child.setProps({ error: true });
+        } 
+      })
+    }
+    else{ 
+      this.profileActions.update(data);
+    }
+  }
+  OnChangePassword(event: Event) {
+    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as PasswordUpdate;
+    const invalidFields = Validation.validateFrom(data);
+    if(invalidFields.length > 0){
+      Object.values(this.children).forEach( child => {
+        if(child.name && invalidFields.includes(child.name)){
+          child.setProps({ error: true });
+        } 
+      })
+    }
+    else{ 
+      this.profileActions.updatePassword(data);
+    }
   }
 
   render(): string {
+    console.log(this);
     return (`
             <div class='profile'>
             <aside class='profile_asside asside'>
                  {{{BackButton}}}
             </aside>
             <main class='profile_main'>
-                <img class='profile_avatar avatar' alt='my 
-                avatar' src='./assets/images/profile.jpg'></img>
+
+
+                <label for="image">
+                  <input type="file" name="image" id="image" style="display:none;"/>
+                    <img class='profile_avatar avatar' 
+                    alt='my avatar' src='./assets/images/profile.jpg'></img>
+              </label>
+
+              
                 <form class='profile_form'>
 
                     {{{EmailInput}}}
@@ -279,16 +324,21 @@ export default class ProfilePage extends Block <IProfileProps> {
                     {{{PasswordInput}}}
 
                     {{{ChangeDataButton}}}
-                    {{{ChangePasswordButton}}}
+                   
 
+                </form>
+                <form class='profile_form'>
+                    {{{ChangePasswordButton}}}
                     {{{OldPasswordInput}}}
                     {{{NewPasswordInput}}}
-
                     {{{ExitButton}}}
                 </form>
+               
             </main>
         </div>
 
         `);
   }
 }
+
+export default connect(({storeUser, passwordUpdated}) => ({storeUser, passwordUpdated}))(ProfilePage)

@@ -2,8 +2,14 @@ type TCallback = (...args: any[]) => void; // Accepts any arguments
 type TListeners = { [event: string]: Array<TCallback> };
 
 export default class EventBus<E extends string> {
-  // Initialize listeners with TListeners type
-  private listeners: TListeners = {}; 
+  
+    // Initialize listeners with TListeners type
+    private listeners: TListeners = {};
+
+  constructor() {
+    this.listeners = {};
+  }  
+
   on(event: E, callback: TCallback) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];

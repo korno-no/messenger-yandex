@@ -1,8 +1,10 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
-import { Router } from '@utils/router';
+import Router  from '@utils/router';
 import Block, {BlockProps} from '@core/block';
+import Store from '@core/store';
+import { User } from '@utils/types';
 
 
 declare global {
@@ -10,6 +12,7 @@ declare global {
   export type Values<T extends Record<string, unknown>> = T[Keys<T>];
   interface Window {
     router: Router;
+    store: Store
   }
 }
 
@@ -21,8 +24,16 @@ Object.entries(Components).forEach(([name, component]) => {
     Handlebars.registerPartial(name, component);
   }
 });
+
+
 const router = new Router('#app');
 window.router = router;
+
+const store = new Store({
+  storeUser: null,
+  storeChats: []
+})
+window.store = store;
 
 //@ts-ignore
 router.use('/', Pages.LoginPage )
@@ -39,7 +50,7 @@ router.use('/', Pages.LoginPage )
 .start();
 
 
-enum Page {
+export enum Page {
   login = "/",
   registration = "/registration",
   messenger = "/messenger",
@@ -47,4 +58,6 @@ enum Page {
   notFoundError = "/404",
   serverError = "/500",
 }
+
+
 
