@@ -152,7 +152,6 @@ class Chat extends Block<IChatProps> {
                         {{{MessageInput}}}
                         {{{SendButton}}}
                     </div>
-                    {{{AddUserToChat}}}
                 </div>
             `);
   }
