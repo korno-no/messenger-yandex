@@ -10,22 +10,15 @@ interface State {
 
 class Store extends EventBus<StoreEvents> {
   
-  private state: State = {};
+  private state: State = {} as State;
 
-  constructor(defaultState) {
-    if (Store.__instance) {
-      return Store.__instance;
-    }
+  constructor(defaultState: State) {
     super();
 
     this.state = defaultState;
     this.set(defaultState);
-
-    Store.__instance = this;
   }
-
-  // ??removeStste()??
-
+  
   public getState(): State {
     return this.state;
   }

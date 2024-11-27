@@ -1,11 +1,13 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
-import { Button, Input, InputWrapper } from '../../components';
 import { AuthAction } from 'actions/auth-actions';
 import { ProfileActions } from 'actions/profile-actions';
 import { Page } from 'main';
 import connect from '@core/connect';
-import { User,PasswordUpdate } from '@utils/types';
+import { User, PasswordUpdate } from '@utils/types';
+import {
+  Button, Input, InputWrapper, Avatar,
+} from '../../components';
 
  interface IProfileProps extends BlockProps {
     storeUser?: User;
@@ -14,14 +16,17 @@ import { User,PasswordUpdate } from '@utils/types';
 }
 
 class ProfilePage extends Block <IProfileProps> {
-  authAction = new AuthAction()
-  profileActions = new ProfileActions()
+  authAction = new AuthAction();
+
+  profileActions = new ProfileActions();
+
   constructor(props: IProfileProps) {
     super({
       ...props,
       title: 'Profile Page',
 
     });
+    this.authAction.getCurrentUser();
   }
 
   init() {
@@ -183,7 +188,7 @@ class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.OnChangePassword(e)
+        this.OnChangePassword(e);
       },
     });
 
@@ -242,9 +247,16 @@ class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        window.router.go(Page.messenger)
+        window.router.go(Page.messenger);
       },
     });
+
+    const ProfileAvatar = new Avatar({
+      name: 'profile ava',
+      mode: 'profileAva',
+      avatarUrl: this.props.storeUser?.avatar,
+    });
+
     this.children = {
       ...this.children,
       EmailInput,
@@ -260,61 +272,80 @@ class ProfilePage extends Block <IProfileProps> {
       NewPasswordInput,
       ExitButton,
       BackButton,
+      ProfileAvatar,
     };
   }
 
   OnChangeData(event: Event) {
-    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries()) as User;
-    const invalidFields = Validation.validateFrom(data);
-    if(invalidFields.length > 0){
-      Object.values(this.children).forEach( child => {
-        if(child.name && invalidFields.includes(child.name)){
+    const data = Object.fromEntries(formData.entries()) as unknown as User;
+
+    const dataWithStringId: { [key: string]: string } = {
+      ...data,
+      id: String(data.id), // Convert id to string
+    };
+    const invalidFields = Validation.validateFrom(dataWithStringId);
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
           child.setProps({ error: true });
-        } 
-      })
-    }
-    else{ 
+        }
+      });
+    } else {
       this.profileActions.update(data);
     }
   }
+
   OnChangePassword(event: Event) {
-    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries()) as PasswordUpdate;
     const invalidFields = Validation.validateFrom(data);
-    if(invalidFields.length > 0){
-      Object.values(this.children).forEach( child => {
-        if(child.name && invalidFields.includes(child.name)){
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
           child.setProps({ error: true });
-        } 
-      })
-    }
-    else{ 
+        }
+      });
+    } else {
       this.profileActions.updatePassword(data);
     }
   }
 
+  componentDidMount(): void {
+    this.authAction.getCurrentUser();
+  }
+
+  componentDidUpdate(): boolean {
+    this.children.EmailInput.children.Input
+      .setProps({ value: this.props?.storeUser?.email });
+    this.children.LoginInput.children.Input
+      .setProps({ value: this.props?.storeUser?.login });
+    this.children.FirstNameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.first_name });
+    this.children.SecondNameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.second_name });
+    this.children.NicknameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.display_name });
+    this.children.PhoneInput.children.Input
+      .setProps({ value: this.props?.storeUser?.phone });
+    this.children.PasswordInput.children.Input
+      .setProps({ value: this.props?.storeUser?.password });
+    this.children.ProfileAvatar
+      .setProps({ avatarUrl: this.props.storeUser?.avatar });
+    return true;
+  }
+
   render(): string {
-    console.log(this);
     return (`
             <div class='profile'>
             <aside class='profile_asside asside'>
                  {{{BackButton}}}
             </aside>
             <main class='profile_main'>
-
-
-                <label for="image">
-                  <input type="file" name="image" id="image" style="display:none;"/>
-                    <img class='profile_avatar avatar' 
-                    alt='my avatar' src='./assets/images/profile.jpg'></img>
-              </label>
-
-              
+               {{{ProfileAvatar}}}
                 <form class='profile_form'>
-
                     {{{EmailInput}}}
                     {{{LoginInput}}}
                     {{{FirstNameInput}}}
@@ -341,4 +372,9 @@ class ProfilePage extends Block <IProfileProps> {
   }
 }
 
-export default connect(({storeUser, passwordUpdated}) => ({storeUser, passwordUpdated}))(ProfilePage)
+export default connect((
+  {storeUser,
+    passwordUpdated }) => ({ 
+      storeUser, 
+      passwordUpdated }))
+  (ProfilePage as unknown as typeof Block);

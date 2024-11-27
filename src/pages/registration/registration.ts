@@ -1,14 +1,11 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { Button, Input, InputWrapper } from 'components';
-import { User } from "@utils/types";
+import { User } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
 import { Page } from 'main';
 
-
-
-
- interface IRegistrationProps extends BlockProps {
+interface IRegistrationProps extends BlockProps {
 
 }
 
@@ -163,7 +160,7 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.onSignIn(e);
+        this.onSignIn();
       },
     });
 
@@ -182,25 +179,29 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
   }
 
   onSignUp(event: Event) {
-    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries()) as User;
-    const invalidFields = Validation.validateFrom(data);
-    if(invalidFields.length > 0){
-      Object.values(this.children).forEach( child => {
-        if(child.name && invalidFields.includes(child.name)){
+    const data = Object.fromEntries(formData.entries()) as unknown as User;
+
+    const dataWithStringId: { [key: string]: string } = {
+      ...data,
+      id: String(data.id), // Convert id to string
+    };
+    const invalidFields = Validation.validateFrom(dataWithStringId);
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
           child.setProps({ error: true });
-        } 
-      })
-    }
-    else{ 
+        }
+      });
+    } else {
       const authAction = new AuthAction();
       authAction.createNewUser(data);
     }
   }
 
-  onSignIn(event: Event) {
-     window.router.go(Page.login)
+  onSignIn() {
+    window.router.go(Page.login);
   }
 
   render(): string {

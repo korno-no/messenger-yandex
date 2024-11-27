@@ -14,6 +14,7 @@ interface IInputProps extends BlockProps {
 
 class Input extends Block<IInputProps> {
   value: string | undefined;
+
   constructor(props: IInputProps) {
     super({
       ...props,
@@ -21,7 +22,7 @@ class Input extends Block<IInputProps> {
         blur: props.onBlur ?? (() => {}),
       },
     });
-    this.name= props.name
+    this.name = props.name;
   }
 
   render(): string {

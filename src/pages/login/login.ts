@@ -1,9 +1,8 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
-import { Button, Input, InputWrapper } from '../../components';
-import { SignIn } from "@utils/types";
+import { SignIn } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
-
+import { Button, Input, InputWrapper } from '../../components';
 
 interface ILoginProps extends BlockProps {
     title: string;
@@ -13,16 +12,16 @@ interface ILoginProps extends BlockProps {
 }
 
 export default class LoginPage extends Block <ILoginProps> {
-  authAction= new AuthAction();
+  authAction = new AuthAction();
+
   constructor(props: ILoginProps) {
     super({
       ...props,
       title: 'Login Page',
     });
-  this.authAction.getCurrentUser()
-
+    this.authAction.login();
   }
-  
+
   init() {
     const LoginInput = new InputWrapper({
       type: 'text',
@@ -89,25 +88,23 @@ export default class LoginPage extends Block <ILoginProps> {
   }
 
   onSignIn(event: Event) {
-    const form = (event.target as HTMLElement).closest("form") as HTMLFormElement;
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries()) as SignIn;
     const invalidFields = Validation.validateFrom(data);
-    if(invalidFields.length > 0){
-      Object.values(this.children).forEach( child => {
-        if(child.name && invalidFields.includes(child.name)){
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
           child.setProps({ error: true });
-        } 
-      })
-    }
-    else{ 
+        }
+      });
+    } else {
       this.authAction.signin(data);
     }
   }
 
-
   onSignUp() {
-    window.router.go('/registration')
+    window.router.go('/registration');
   }
 
   render(): string {

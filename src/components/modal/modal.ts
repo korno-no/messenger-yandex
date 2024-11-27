@@ -14,12 +14,11 @@ class Modal extends Block<IModalProps> {
       ...props,
       events: {
         click: props.onClick as EventListener,
-    },
+      },
     });
   }
 
   render(): string {
-
     return (`
        
             <div class="wrapper display-{{#if isActive}}active{{/if}}" >

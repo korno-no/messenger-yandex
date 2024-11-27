@@ -1,4 +1,5 @@
 export type User = {
+    id: number,
     first_name: string,
     second_name: string,
     login: string,
@@ -6,7 +7,7 @@ export type User = {
     password?: string,
     phone: string,
     display_name?: string,
-    avatar?: File
+    avatar?: string
 }
 export type SignIn = {
     login: string,

@@ -2,9 +2,7 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
 import Router  from '@utils/router';
-import Block, {BlockProps} from '@core/block';
 import Store from '@core/store';
-import { User } from '@utils/types';
 
 
 declare global {
@@ -17,7 +15,7 @@ declare global {
 }
 
 Handlebars.registerHelper('eq', (arg1, arg2) => arg1 === arg2);
-
+Handlebars.registerHelper('or', (arg1, arg2) => arg1 || arg2);
 
 Object.entries(Components).forEach(([name, component]) => {
   if (typeof component === 'string') {
@@ -30,8 +28,9 @@ const router = new Router('#app');
 window.router = router;
 
 const store = new Store({
-  storeUser: null,
-  storeChats: []
+  storeUser: [],
+  storeChats: [],
+  storeMessages: []
 })
 window.store = store;
 
@@ -53,11 +52,5 @@ export enum Page {
   notFoundError = "/404",
   serverError = "/500",
 }
-
-if(!window.store.storeUser){
-  window.router.go(Page.login)
-}
-
-
 
 

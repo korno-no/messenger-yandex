@@ -1,8 +1,8 @@
-import Block, {BlockProps} from '@core/block';
+import Block from '@core/block';
 import Route from './route';
 
 class Router {
-    //private static __instance: Router;
+    private static __instance: Router | null = null;  
     routes!: Route[];
     history!: History;
     _currentRoute!: Route | null;
@@ -19,13 +19,15 @@ class Router {
         Router.__instance = this;
     }
 
-    use(pathname: string, block: Block) {
-        const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+    use(pathname: string, BlockClass: new (props: any) => Block<any>) {
+            
+        const route = new Route(pathname, BlockClass, { rootQuery: this._rootQuery });
         this.routes.push(route);
         return this
     }
     //transition to a new path
     start() {
+        
         window.onpopstate = event => {
             if(event.currentTarget instanceof Window)
             this._onRoute(event.currentTarget.location.pathname);

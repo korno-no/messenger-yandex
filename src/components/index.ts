@@ -6,9 +6,10 @@ import Message from './message/message';
 import CoverScreen from './cover-screen/cover-screen';
 import Modal from './modal/modal';
 import Chat from './chat/chat';
-import ToggleMenu  from './toggle-menu/toggle-menu'
+import ToggleMenu from './toggle-menu/toggle-menu';
+import Avatar from './avatar/avatar';
 
 export {
-  Button, Input, InputWrapper, ContactCard, 
-  Message, CoverScreen, Modal, Chat, ToggleMenu
+  Button, Input, InputWrapper, ContactCard,
+  Message, CoverScreen, Modal, Chat, ToggleMenu, Avatar,
 };

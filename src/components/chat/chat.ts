@@ -1,5 +1,7 @@
 import Block, { BlockProps } from '@core/block';
-import {Input, Button, ToggleMenu} from '../../components';
+import {
+  Input, Button, ToggleMenu, Message, Avatar,
+} from 'components';
 import './chat.css';
 import Validation from '@utils/validation';
 import { ChatsActions } from 'actions/chats-actions';
@@ -7,19 +9,19 @@ import connect from '@core/connect';
 
 interface IChatProps extends BlockProps {
     chatId?: number;
-    chatAvatar?: string;
+    avatar?: string;
     dialogName: string;
     isMenueOpen?: boolean;
 }
 
 class Chat extends Block<IChatProps> {
-  chatsActions = new ChatsActions()
+  chatsActions = new ChatsActions();
 
   constructor(props: IChatProps) {
-    super({...props});
+    super({ ...props });
   }
-  init(){
 
+  init() {
     const MessageInput = new Input({
       type: 'message', name: 'message', label: '', modificator: 'bottom',
     });
@@ -36,6 +38,8 @@ class Chat extends Block<IChatProps> {
           if (error) console.log('ooops, input is empty, we cant send empty message');
           else {
             console.log({ messageInput: messageInput.value });
+            this.chatsActions.sendMessage(messageInput.value);
+            messageInput.value = '';
           }
         }
       },
@@ -47,32 +51,42 @@ class Chat extends Block<IChatProps> {
         type: 'text',
         text: 'delete chat',
         settings: { withInternalID: true },
-        onClick: (e: Event) => {
-          this.chatsActions.deleteChat(this.props.chatId?? 0)
-          AdditionalInfoToggleMenu.setProps({isActive: !AdditionalInfoToggleMenu.props.isActive});
-
+        onClick: () => {
+          this.chatsActions.deleteChat(this.props.chatId ?? 0);
+          AdditionalInfoToggleMenu.setProps({ isActive: !AdditionalInfoToggleMenu.props.isActive });
         },
       }),
       AddUserToChat: new Button({
         type: 'text',
         text: 'add user to chat',
         settings: { withInternalID: true },
-        onClick: (e: Event) => {
-          window.store.set({isOpenAddUserToChat: true})
-          AdditionalInfoToggleMenu.setProps({isActive: !AdditionalInfoToggleMenu.props.isActive});
+        onClick: () => {
+          window.store.set({ isOpenAddUserToChat: true });
+          AdditionalInfoToggleMenu.setProps({ isActive: !AdditionalInfoToggleMenu.props.isActive });
         },
-      })
-    })
+      }),
+      DeleteUserFormChat: new Button({
+        type: 'text',
+        text: 'delete user from chat',
+        settings: { withInternalID: true },
+        onClick: () => {
+          window.store.set({ isOpenDeleteUsersFromChat: true });
+          AdditionalInfoToggleMenu.setProps({ isActive: !AdditionalInfoToggleMenu.props.isActive });
+        },
+      }),
+    });
+
+    const Messages: Message[] = [];
 
     const AdditionalInfoButton = new Button({
       modificator: 'additional-info',
       onClick: (e: Event) => {
         e.preventDefault();
-        AdditionalInfoToggleMenu.setProps({isActive: !AdditionalInfoToggleMenu.props.isActive});
+        AdditionalInfoToggleMenu.setProps({ isActive: !AdditionalInfoToggleMenu.props.isActive });
       },
     });
 
-   
+    const ChatAvatar = new Avatar({});
 
     this.children = {
       ...this.children,
@@ -80,15 +94,49 @@ class Chat extends Block<IChatProps> {
       SendButton,
       AdditionalInfoButton,
       AdditionalInfoToggleMenu,
+      ChatAvatar,
     };
-  
+    this.lists = {
+      ...this.lists,
+      Messages,
+    };
   }
-  
+
+  componentDidUpdate(_oldProps: IChatProps, _newProps: IChatProps): boolean {
+    if (this.props.chatId && _oldProps.chatId !== this.props.chatId) {
+      this.chatsActions.startConversation(this.props.storeUser.id, this.props.chatId);
+    }
+
+    // render if the number of messages has been changed
+    if (_oldProps.storeMessages.length !== this.props.storeMessages.length) {
+      this.lists.Messages = this.props.storeMessages.map((message: Record<string, any>) => {
+        const ConversationMessages = new Message({
+          chat_id: message.chat_id,
+          type: 'text',
+          direction: message.user_id === this.props.storeUser.id ? 'outgoing' : 'incoming',
+          time: message.time,
+          text: message.content,
+          isRead: message.isRead,
+          file: message.file,
+        });
+        return ConversationMessages;
+      });
+    }
+
+    this.children.ChatAvatar = new Avatar({
+      name: 'chat ava',
+      mode: 'chatAva',
+      avatarUrl: this.props.avatar,
+      chatId: this.props.chatId,
+    });
+
+    return super.componentDidUpdate(_oldProps, _newProps);
+  }
+
   render(): string {
     return (`<div>
                     <div class='conversation_contact '>
-                        <img src='{{chatAvatar}}' alt='avatar' 
-                        class='conversation_avatar avatar'>
+                        {{{ChatAvatar}}}
                         {{dialogName}}
                         {{{AdditionalInfoButton}}}
                         {{{AdditionalInfoToggleMenu}}}
@@ -96,7 +144,6 @@ class Chat extends Block<IChatProps> {
                     </div>
 
                     <div class='conversation_chat chat'>
-                    <div class='c'>19 June</div>
                         {{{Messages}}}
                     </div>
 
@@ -110,5 +157,20 @@ class Chat extends Block<IChatProps> {
             `);
   }
 }
-export default connect(({isOpenAddUserToChat}) => ({ isOpenAddUserToChat}))(Chat)
+export default connect((
+  {
+    isOpenAddUserToChat,
+    storeUser,
+    storeMessages,
+    isOpenDeleteUsersFromChat,
+  }:any,
+) => (
+  {
+    isOpenAddUserToChat,
+    storeUser,
+    storeMessages,
+    isOpenDeleteUsersFromChat,
+  }
+
+))(Chat as unknown as typeof Block);
 

@@ -1,12 +1,13 @@
 import Block, { BlockProps } from '@core/block';
 import './contact-card.css';
+import Avatar from 'components/avatar/avatar';
 
 interface IContactCardProps extends BlockProps {
     chatId: number,
     name: string,
     created_by: number,
     last_message: string,
-    sender?: number,
+    from?: string,
     isRead?: boolean,
     unread_count: number,
     date?: string,
@@ -19,7 +20,6 @@ interface IContactCardProps extends BlockProps {
 }
 
 class ContactCard extends Block <IContactCardProps> {
-    
   constructor(props: IContactCardProps) {
     super({
       ...props,
@@ -27,15 +27,25 @@ class ContactCard extends Block <IContactCardProps> {
         click: props.onClick as EventListener,
       },
     });
-    
   }
-  
+
+  init() {
+    const contactCardAvatar = new Avatar({
+      name: 'chat ava',
+      mode: 'contactCard',
+      avatarUrl: this.props.avatar,
+      chatId: this.props.chatId,
+    });
+    this.children = {
+      ...this.children,
+      contactCardAvatar,
+    };
+  }
 
   render(): string {
-    
     return (`<div class='contact-card contact-card_{{active}}'>
                     {{{DeleteChatButton}}}
-                    <img src={{avatar}} alt='Avatar' class='contact-card_avatar avatar'>
+                    {{{contactCardAvatar}}}
                     <div class='contact-card_info'>
                         <div class='contact-card_1-line'>
                             <div class='contact-card_name'>  {{name}}</div>
@@ -44,9 +54,7 @@ class ContactCard extends Block <IContactCardProps> {
                         <div class='contact-card_2-line'>
 
                             <div class='contact-card_message'> 
-                                {{#if sender}}
-                                    Me:
-                                {{/if}}
+                                {{from}}
                                 {{last_message}}
                             </div>
                             {{#if unread_count}}

@@ -44,6 +44,7 @@ class Route {
     }
 
     render() {
+
         if (!this._block) {
             this._block = new this._blockClass();
             if(this._block){

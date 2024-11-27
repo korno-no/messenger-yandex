@@ -13,7 +13,7 @@ type Events = {
 };
 
 export type BlockProps = {
-    [key: string]: unknown;
+    [key: string]: any;
     events?: Events;
 };
 
@@ -33,7 +33,7 @@ class Block<T extends BlockProps = BlockProps> {
   name!: string;
 
   // private _eventbus;
-  protected props: T;
+  props: T;
 
   private eventBus: () => EventBus<TEvents>;
 
@@ -80,15 +80,15 @@ class Block<T extends BlockProps = BlockProps> {
   init() { }
 
   _componentDidMount() {
-    // this.componentDidMount();
+     this.componentDidMount();
 
     Object.values(this.children).forEach((child: Block<any>) => {
       child.dispatchComponentDidMount();
     });
   }
 
-  // componentDidMount(_oldProps: T) {
-  // }
+   componentDidMount() {
+   }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -101,6 +101,13 @@ class Block<T extends BlockProps = BlockProps> {
       return;
     }
     this._render();
+  
+
+      const container = document.querySelector('.chat');
+      if (container) {
+          container.scrollTop = container.scrollHeight;
+      }
+    
   }
 
   componentDidUpdate(_oldProps: T, _newProps: T) {
@@ -143,8 +150,6 @@ class Block<T extends BlockProps = BlockProps> {
     this.compile(templateString, { ...this.props });
     this._removeEvents();
     this._addEvents();
-    console.log(this._element)
-    //debugger
   }
 
   render(): string {
@@ -166,7 +171,6 @@ class Block<T extends BlockProps = BlockProps> {
   }
 
   _makePropsProxy(props: Partial<T> | Record<string, Block<any>[]>): T {
-    // TODO change it into arrow function
     const self = this;
 
     return new Proxy(props as T, {

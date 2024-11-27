@@ -1,39 +1,65 @@
+import ChatsApi from '@api/chats-api';
+import ChatMessagesApi from '@api/chat-messages-api';
 
-import ChatsApi from "@api/chats-api";
-import { ContactCard } from "components";
 export class ChatsActions {
+  public async getChats() {
+    const response = await ChatsApi.request();
+    window.store.set({ storeChats: response });
 
-    public async getChats()  {
-        const response = await ChatsApi.request();
-        window.store.set({'storeChats': response})
+    setInterval(async () => {
+      const updatedResponse = await ChatsApi.request();
+      window.store.set({ storeChats: updatedResponse });
+    }, 5000);
+  }
+
+  public async createChat(data: string) {
+    await ChatsApi.createChat({ title: data });
+    this.getChats();
+  }
+
+  public async deleteChat(chatId: number) {
+    await ChatsApi.delete(chatId);
+    this.getChats();
+  }
+
+  public async addUsersToChat(users: string, chatId: number) {
+    const usersArray = users.split(',').map((user) => parseInt(user, 10));
+    await ChatsApi.addUsers({
+      users: usersArray,
+      chatId,
+    });
+  }
+
+  public async deleteUsersFromChat(users: string, chatId: number) {
+    const usersArray = users.split(',').map((user) => parseInt(user, 10));
+    await ChatsApi.deleteUsers({
+      users: usersArray,
+      chatId,
+    });
+  }
+
+  public async uploadChatAvatar(avatar: FormData) {
+    const response = await ChatsApi.uploadAvatar(avatar);
+    return response;
+  }
+
+  //  messages
+  public async startConversation(userId: number, chatId: number) {
+    try {
+      const tokenResponse = await ChatMessagesApi.getToken(chatId)as { token: string } | any;
+      if ('token' in tokenResponse) {
+        await ChatMessagesApi.estWsConnection(userId, chatId, tokenResponse.token);
+        ChatMessagesApi.getMessages();
+      } else {
+        console.error('Invalid response structure');
+      }
+    } catch (error) {
+      console.error('Failed to start conversation:', error);
     }
-    public async createChat(data: string) {  
-        const finaldata = {title:data} 
-        const response = await ChatsApi.createChat(finaldata);
-        this.getChats()
-    }
+  }
 
-    public async deleteChat(chatId: number)  {
-        const response = await ChatsApi.delete(chatId);
-        this.getChats()
-    }
-
-   /* {
-        "users": [
-          0
-        ],
-        "chatId": 0
-      }*/
-    public async addUsersToChat(users: string, chatId: number)  {
-        const usersArray = users.split(',').map((user) => parseInt(user, 10));
-
-        const response = await ChatsApi.addUsers({
-            users: usersArray, 
-            chatId: chatId 
-        });
-    }
-
-
-
-
-} 
+  public async sendMessage(message: string) {
+    const response = await ChatMessagesApi.sendMessage(message);
+    console.log(response);
+  }
+}

@@ -72,9 +72,11 @@ export default class HTTPTransport {
     
         xhr.timeout = timeout;
         xhr.withCredentials = withCredentials;
+
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
+              
               if (xhr.responseText === 'OK') {
                 resolve({ message: 'OK' } as R);
               } else {
@@ -89,16 +91,21 @@ export default class HTTPTransport {
             reject(new Error(xhr.responseText));
           }
         };
+
         xhr.onerror = () => {
           reject(new Error('Network error')); 
         };
+
         xhr.ontimeout = () => {
           reject(new Error('Request timed out')); 
         };
     
         if (options.method === METHOD.GET || !options.data) {
           xhr.send();
-        } else if (options.data) {
+        } else if(options.data instanceof FormData){
+          xhr.send(options.data);
+        } 
+        else if (options.data) {
           xhr.send(JSON.stringify(options.data));
         }
       }

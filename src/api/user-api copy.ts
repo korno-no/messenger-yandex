@@ -19,5 +19,9 @@ class UserApi extends BaseAPI {
     data.append('avatar', file);
     return userApi.put('/profile/avatar', { data });
   }
+
+  getResources(data: string) {
+    return userApi.put('/profile/avatar', { data });
+  }
 }
 export default new UserApi();

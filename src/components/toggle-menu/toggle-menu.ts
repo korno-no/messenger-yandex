@@ -18,10 +18,10 @@ class ToggleMenu extends Block<IToggleMenuProps> {
   }
 
   render(): string {
-
     return (`<div class='toggle-menu  display-{{#if isActive}}active{{/if}}'>
                 {{{DeleteChat}}}
                 {{{AddUserToChat}}}
+                {{{DeleteUserFormChat}}}
             </div>
         `);
   }
