@@ -3,9 +3,15 @@
 
 <font size="5">🌟 About the Project </font>
 
-This project is part of the Yandex Practicum Middle Front-End course.
+This project is part of the Yandex Practicum Middle Front-End course. The goal is to build a functional and user-friendly messenger application using modern web technologies.
 
-This project is part of the Yandex Practicum Middle Front-End course. It's all about building cool stuff using Vite, Handlebars, and other awesome tools to create something that’s both functional and slick.
+The project utilizes tools such as Vite, Handlebars, and other key technologies to create a scalable and interactive web application. Instead of relying on third-party libraries, we’ve implemented custom solutions for:
+
+- **Routing**: A custom routing solution for handling client-side navigation.
+- **Flux**: A custom state management pattern inspired by Flux, built from scratch to manage application state.
+- **HTTP Requests**: A custom HTTP layer to handle API requests, ensuring full control over the interaction with the server.
+- **WebSockets**: Real-time communication between users for messaging, implemented from scratch for seamless interaction.
+
 
 You can check out the prototype on [figma](https://www.figma.com/design/U9OaAoHcsa2Xy1UN7R42cJ/Untitled?node-id=0-1&t=JNhjrIr3G59G323D-0) to see the design vision I’m working towards.
 
