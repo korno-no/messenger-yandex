@@ -21,7 +21,7 @@ class Modal extends Block<IModalProps> {
   render(): string {
     return (`
        
-            <div class="wrapper display-{{#if isActive}}active{{/if}}" >
+            <div class="wrapper display{{#if isActive}}-active{{/if}}" >
                 <div class="modal">
                     {{{ExitButton}}}
                     <h1 class="wrapper_title">{{title}}</h1>

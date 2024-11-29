@@ -23,6 +23,7 @@
     max-height: calc(100vh - 125px); 
     overflow-y: auto; 
 }
+
 .asside_header{
     padding: 10px;
     background-image: url('../../assets/images/background.jpg');

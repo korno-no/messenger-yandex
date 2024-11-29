@@ -1,11 +1,11 @@
 .toggle-menu{
     display: flex;
     flex-direction: column;
-    padding: 30px 30px;
+    padding: 30px;
     margin: auto;
     border: black 3px solid;
     border-radius: 12px;
-    background-image: url(/src/assets/images/background.jpg);
+    background-image: url('/src/assets/images/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
@@ -13,7 +13,7 @@
     right: 50px;
 }
 
-.display-{
+.display{
     display: none!important;
 }
 
