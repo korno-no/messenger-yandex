@@ -3,6 +3,7 @@ import Validation from '@utils/validation';
 import { SignIn } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
 import { Button, Input, InputWrapper } from '../../components';
+import { Page } from 'main';
 
 interface ILoginProps extends BlockProps {
     title: string;
@@ -104,7 +105,7 @@ export default class LoginPage extends Block <ILoginProps> {
   }
 
   onSignUp() {
-    window.router.go('/registration');
+    window.router.go(Page.registration);
   }
 
   render(): string {

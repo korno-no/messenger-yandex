@@ -9,6 +9,7 @@ import {
   CoverScreen, Chat,
 } from '../../components';
 import backgroundImg from '../../assets/images/background.jpg';
+import { Page } from 'main';
 
 interface IMessengerProps extends BlockProps {
     title: string;
@@ -71,7 +72,7 @@ class MessengerPage extends Block <IMessengerProps> {
         e.preventDefault();
         this.setProps({ isOpenChat: false });
         this.chatsActions.clearInterval();
-        window.router.go('/profile');
+        window.router.go(Page.profile);
       },
     });
     const NewChatButton = new Button({

@@ -35,9 +35,9 @@ const store = new Store({
 window.store = store;
 
 router.use('/', Pages.LoginPage )
-.use('/registration', Pages.RegistrationPage)
+.use('/sign-up', Pages.RegistrationPage)
 .use('/messenger', Pages.MessengerPage)
-.use('/profile', Pages.ProfilePage)
+.use('/settings', Pages.ProfilePage)
 .use('/404', Pages.ErrorPage)
 .use('/500', Pages.ErrorFixingPage)
 .start();
@@ -46,9 +46,9 @@ router.use('/', Pages.LoginPage )
 
 export enum Page {
   login = "/",
-  registration = "/registration",
+  registration = "/sign-up",
   messenger = "/messenger",
-  profile = "/profile",
+  profile = "/settings",
   notFoundError = "/404",
   serverError = "/500",
 }
