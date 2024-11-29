@@ -227,7 +227,7 @@ class MessengerPage extends Block <IMessengerProps> {
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (oldProps.storeChats !== newProps.storeChats) {
       this.lists.ContactCards = this.props.storeChats.map((chat: Record<string, any>) => {
-        const contactCard = new ContactCard({
+        const contactCard: ContactCard = new ContactCard({
           chatId: chat.id,
           name: chat.title,
           avatar: chat.avatar,
