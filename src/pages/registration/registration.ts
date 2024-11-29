@@ -185,7 +185,7 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
 
     const dataWithStringId: { [key: string]: string } = {
       ...data,
-      id: String(data.id) // Convert id to string
+      id: String(data.id), // Convert id to string
     };
     const invalidFields = Validation.validateFrom(dataWithStringId);
     if (invalidFields.length > 0) {
