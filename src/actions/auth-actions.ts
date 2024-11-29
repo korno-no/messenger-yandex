@@ -5,7 +5,7 @@ import { Page } from 'main';
 export class AuthAction {
   public async createNewUser(data: User) {
     await AuthApi.create(data);
-    this.getCurrentUser();
+    this.login();
   }
 
   public async signin(data: SignIn) {
