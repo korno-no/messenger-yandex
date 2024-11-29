@@ -9,7 +9,7 @@
     "paths": {
       "@core/*": ["core/*"], 
       "@utils/*": ["utils/*"],
-      "@api/*": ["api/*"],
+      "@api/*": ["api/*"]
     },
     "esModuleInterop": true,
     "moduleResolution": "bundler",
