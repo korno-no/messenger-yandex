@@ -69,6 +69,8 @@ class MessengerPage extends Block <IMessengerProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.setProps({ isOpenChat: false });
+        this.chatsActions.clearInterval();
         window.router.go('/profile');
       },
     });
@@ -124,6 +126,7 @@ class MessengerPage extends Block <IMessengerProps> {
           e.preventDefault();
           this.props.isOpenAddUserToChat = false;
           AddUserToChat.setProps({ isActive: this.props.isOpenAddUserToChat });
+          window.store.set({ isOpenAddUserToChat: false });
         },
       }),
       Input: new Input({
@@ -144,6 +147,7 @@ class MessengerPage extends Block <IMessengerProps> {
           this.chatsActions.addUsersToChat(inputName.value, this.children.CurrentChat.props.chatId);
           this.props.isOpenAddUserToChat = false;
           AddUserToChat.setProps({ isActive: this.props.isOpenAddUserToChat });
+          window.store.set({ isOpenAddUserToChat: false });
         },
       }),
     });
@@ -163,6 +167,7 @@ class MessengerPage extends Block <IMessengerProps> {
           e.preventDefault();
           this.props.isOpenDeleteUsersFromChat = false;
           DeleteUserFromChat.setProps({ isActive: this.props.isOpenDeleteUsersFromChat });
+          window.store.set({ isOpenDeleteUsersFromChat: false });
         },
       }),
       Input: new Input({
@@ -188,6 +193,7 @@ class MessengerPage extends Block <IMessengerProps> {
 
           this.props.isOpenDeleteUsersFromChat = false;
           DeleteUserFromChat.setProps({ isActive: this.props.isOpenDeleteUsersFromChat });
+          window.store.set({ isOpenDeleteUsersFromChat: false });
         },
       }),
     });
@@ -256,9 +262,6 @@ class MessengerPage extends Block <IMessengerProps> {
       chatId: contactCard.props.chatId,
       avatar: contactCard.props.avatar,
     });
-  }
-
-  onSubmitNewDialog() {
   }
 
   render(): string {

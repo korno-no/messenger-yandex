@@ -2,6 +2,7 @@ import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { AuthAction } from 'actions/auth-actions';
 import { ProfileActions } from 'actions/profile-actions';
+import { ChatsActions } from 'actions/chats-actions';
 import { Page } from 'main';
 import connect from '@core/connect';
 import { User, PasswordUpdate } from '@utils/types';
@@ -18,15 +19,17 @@ import {
 class ProfilePage extends Block <IProfileProps> {
   authAction = new AuthAction();
 
+  chatAction = new ChatsActions();
+
   profileActions = new ProfileActions();
 
   constructor(props: IProfileProps) {
     super({
       ...props,
       title: 'Profile Page',
+      name: 'Profile',
 
     });
-    this.authAction.getCurrentUser();
   }
 
   init() {
@@ -247,6 +250,7 @@ class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.chatAction.setInterval();
         window.router.go(Page.messenger);
       },
     });
@@ -254,7 +258,10 @@ class ProfilePage extends Block <IProfileProps> {
     const ProfileAvatar = new Avatar({
       name: 'profile ava',
       mode: 'profileAva',
-      avatarUrl: this.props.storeUser?.avatar,
+      avatarUrl: this.props?.storeUser?.avatar,
+      events: {
+        change: (e) => this.onChangeAvatar(e),
+      },
     });
 
     this.children = {
@@ -310,6 +317,15 @@ class ProfilePage extends Block <IProfileProps> {
       });
     } else {
       this.profileActions.updatePassword(data);
+    }
+  }
+
+  onChangeAvatar(event: Event) {
+    event.stopPropagation();
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.profileActions.updateAvatar(file);
     }
   }
 
@@ -373,8 +389,11 @@ class ProfilePage extends Block <IProfileProps> {
 }
 
 export default connect((
-  {storeUser,
-    passwordUpdated }) => ({ 
-      storeUser, 
-      passwordUpdated }))
-  (ProfilePage as unknown as typeof Block);
+  {
+    storeUser,
+    passwordUpdated,
+  },
+) => ({
+  storeUser,
+  passwordUpdated,
+}))(ProfilePage as unknown as typeof Block);
