@@ -21,4 +21,3 @@ class UserApi extends BaseAPI {
   }
 }
 export default new UserApi();
-
