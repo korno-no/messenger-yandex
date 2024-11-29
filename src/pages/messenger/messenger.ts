@@ -2,6 +2,7 @@ import Block, { BlockProps } from '@core/block';
 import { ChatsActions } from 'actions/chats-actions';
 import { AuthAction } from 'actions/auth-actions';
 import connect from '@core/connect';
+import { Page } from 'main';
 import {
   Button, Input,
   InputWrapper, ContactCard,
@@ -9,7 +10,6 @@ import {
   CoverScreen, Chat,
 } from '../../components';
 import backgroundImg from '../../assets/images/background.jpg';
-import { Page } from 'main';
 
 interface IMessengerProps extends BlockProps {
     title: string;

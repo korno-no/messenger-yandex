@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   resolve: {
     alias: {
-      '@core': '/src/core', 
+      '@core': '/src/core',
       '@components': '/src/components',
       '@utils': '/src/utils',
       '@api': '/src/api',

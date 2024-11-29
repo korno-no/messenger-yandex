@@ -2,8 +2,8 @@ import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
 import { SignIn } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
-import { Button, Input, InputWrapper } from '../../components';
 import { Page } from 'main';
+import { Button, Input, InputWrapper } from '../../components';
 
 interface ILoginProps extends BlockProps {
     title: string;
