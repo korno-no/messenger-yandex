@@ -4,8 +4,6 @@ import { User, PasswordUpdate } from '@utils/types';
 export class ProfileActions {
   public async update(data: User) {
     await UserApi.update(data);
-
-    window.store.set({ storeUser: data });
   }
 
   public async updatePassword(data: PasswordUpdate) {
@@ -14,6 +12,7 @@ export class ProfileActions {
   }
 
   public async updateAvatar(file: File) {
-    await UserApi.updateAvatar(file);
+    const result = await UserApi.updateAvatar(file);
+    window.store.set({ storeUser: result });
   }
 }

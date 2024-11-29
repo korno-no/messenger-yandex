@@ -76,8 +76,6 @@ class Chat extends Block<IChatProps> {
       }),
     });
 
-    const Messages: Message[] = [];
-
     const AdditionalInfoButton = new Button({
       modificator: 'additional-info',
       onClick: (e: Event) => {
@@ -86,6 +84,7 @@ class Chat extends Block<IChatProps> {
       },
     });
 
+    const Messages: Message[] = [];
     const ChatAvatar = new Avatar({});
 
     this.children = {
@@ -102,7 +101,23 @@ class Chat extends Block<IChatProps> {
     };
   }
 
+  onChangeAvatar(event: Event) {
+    event.stopPropagation();
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('chatId', String(this.props.chatId));
+      formData.append('avatar', file);
+
+      this.chatsActions.uploadChatAvatar(formData);
+    }
+  }
+
   componentDidUpdate(_oldProps: IChatProps, _newProps: IChatProps): boolean {
+    if (!this.props.chatId) {
+      return false;
+    }
     if (this.props.chatId && _oldProps.chatId !== this.props.chatId) {
       this.chatsActions.startConversation(this.props.storeUser.id, this.props.chatId);
     }
@@ -122,14 +137,24 @@ class Chat extends Block<IChatProps> {
         return ConversationMessages;
       });
     }
-
-    this.children.ChatAvatar = new Avatar({
-      name: 'chat ava',
-      mode: 'chatAva',
-      avatarUrl: this.props.avatar,
-      chatId: this.props.chatId,
-    });
-
+    if (_oldProps.avatar !== this.props.avatar) {
+      if (!_oldProps.avatar) {
+        this.children.ChatAvatar = new Avatar({
+          name: 'chat ava',
+          mode: 'chatAva',
+          avatarUrl: this.props?.avatar,
+          events: {
+            change: (e) => {
+              this.onChangeAvatar(e);
+            },
+          },
+        });
+      } else {
+        this.children.ChatAvatar.setProps({
+          avatarUrl: this.props?.avatar,
+        });
+      }
+    }
     return super.componentDidUpdate(_oldProps, _newProps);
   }
 
@@ -172,4 +197,3 @@ export default connect((
   }
 
 ))(Chat as unknown as typeof Block);
-
