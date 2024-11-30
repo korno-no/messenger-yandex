@@ -5,8 +5,6 @@ import { User } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
 import { Page } from 'main';
 
-
-
 export default class RegistrationPage extends Block {
   authAction = new AuthAction();
 
