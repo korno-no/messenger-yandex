@@ -1,24 +1,23 @@
 import ChatsApi from '@api/chats-api';
 import ChatMessagesApi from '@api/chat-messages-api';
 
-let chaInterval: number | undefined;
+let chaInterval: number | undefined 
 
 export class ChatsActions {
   public async getChats() {
     const response = await ChatsApi.request();
     window.store.set({ storeChats: response });
-
     this.setInterval();
   }
 
-  public setInterval() {
+  public setInterval(){
     chaInterval = setInterval(async () => {
       const updatedResponse = await ChatsApi.request();
       window.store.set({ storeChats: updatedResponse });
     }, 5000);
   }
 
-  public clearInterval() {
+  public clearInterval(){
     clearInterval(chaInterval);
   }
 

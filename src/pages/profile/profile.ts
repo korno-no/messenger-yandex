@@ -241,7 +241,7 @@ class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.authAction.logout();
+        this.authAction.logout(true);
       },
     });
     const BackButton = new Button({

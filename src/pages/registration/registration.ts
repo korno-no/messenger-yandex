@@ -10,11 +10,13 @@ interface IRegistrationProps extends BlockProps {
 }
 
 export default class RegistrationPage extends Block <IRegistrationProps> {
+  authAction = new AuthAction;
   constructor(props: IRegistrationProps) {
     super({
       ...props,
       title: 'Registration Page',
     });
+    this.authAction.logout(false);
   }
 
   init() {
@@ -195,8 +197,7 @@ export default class RegistrationPage extends Block <IRegistrationProps> {
         }
       });
     } else {
-      const authAction = new AuthAction();
-      authAction.createNewUser(data);
+      this.authAction.createNewUser(data);
     }
   }
 

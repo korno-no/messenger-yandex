@@ -13,9 +13,12 @@ export class AuthAction {
     this.login();
   }
 
-  public async logout() {
+  public async logout(goToLogin: boolean) {
     await AuthApi.logout();
-    window.router.go(Page.login);
+    window.store.set({ storeUser: {} });
+    if(goToLogin){
+      window.router.go(Page.login);
+    }
   }
 
   public async login() {
