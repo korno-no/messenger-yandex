@@ -10,7 +10,8 @@ interface IRegistrationProps extends BlockProps {
 }
 
 export default class RegistrationPage extends Block <IRegistrationProps> {
-  authAction = new AuthAction;
+  authAction = new AuthAction();
+
   constructor(props: IRegistrationProps) {
     super({
       ...props,

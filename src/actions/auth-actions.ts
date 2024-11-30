@@ -16,7 +16,7 @@ export class AuthAction {
   public async logout(goToLogin: boolean) {
     await AuthApi.logout();
     window.store.set({ storeUser: {} });
-    if(goToLogin){
+    if (goToLogin) {
       window.router.go(Page.login);
     }
   }
