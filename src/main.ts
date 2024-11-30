@@ -42,15 +42,13 @@ router.use('/', Pages.LoginPage )
 .use('/500', Pages.ErrorFixingPage)
 .start();
 
-
-
 export enum Page {
-  login = "/",
-  registration = "/sign-up",
-  messenger = "/messenger",
-  profile = "/settings",
-  notFoundError = "/404",
-  serverError = "/500",
+  login = '/',
+  registration = '/sign-up',
+  messenger = '/messenger',
+  profile = '/settings',
+  notFoundError = '/404',
+  serverError = '/500',
 }
 
 

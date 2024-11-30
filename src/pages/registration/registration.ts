@@ -5,14 +5,12 @@ import { User } from '@utils/types';
 import { AuthAction } from 'actions/auth-actions';
 import { Page } from 'main';
 
-interface IRegistrationProps extends BlockProps {
 
-}
 
-export default class RegistrationPage extends Block <IRegistrationProps> {
+export default class RegistrationPage extends Block {
   authAction = new AuthAction();
 
-  constructor(props: IRegistrationProps) {
+  constructor(props:BlockProps) {
     super({
       ...props,
       title: 'Registration Page',
