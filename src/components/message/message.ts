@@ -2,10 +2,13 @@ import Block, { BlockProps } from '@core/block';
 import './message.css';
 
 interface IMessageProps extends BlockProps {
+    chat_id: number;
     direction: 'incoming' | 'outgoing';
     type: string;
     time: string;
     text: string;
+    isRead: boolean;
+    file?: File;
     onClick?: () => void;
     events?: { [key: string]: EventListener };
 }

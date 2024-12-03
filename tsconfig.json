@@ -8,7 +8,8 @@
     "baseUrl": "./src",
     "paths": {
       "@core/*": ["core/*"], 
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@api/*": ["api/*"]
     },
     "esModuleInterop": true,
     "moduleResolution": "bundler",

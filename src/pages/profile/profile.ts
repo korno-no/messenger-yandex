@@ -1,17 +1,34 @@
 import Block, { BlockProps } from '@core/block';
 import Validation from '@utils/validation';
-import { Button, Input, InputWrapper } from '../../components';
+import { AuthAction } from 'actions/auth-actions';
+import { ProfileActions } from 'actions/profile-actions';
+import { ChatsActions } from 'actions/chats-actions';
+import { Page } from 'main';
+import connect from '@core/connect';
+import { User, PasswordUpdate } from '@utils/types';
+import {
+  Button, Input, InputWrapper, Avatar,
+} from '../../components';
 
  interface IProfileProps extends BlockProps {
+    storeUser?: User;
     title: string;
     settings: {withInternalID: true},
 }
 
-export default class ProfilePage extends Block <IProfileProps> {
+class ProfilePage extends Block <IProfileProps> {
+  authAction = new AuthAction();
+
+  chatAction = new ChatsActions();
+
+  profileActions = new ProfileActions();
+
   constructor(props: IProfileProps) {
     super({
       ...props,
       title: 'Profile Page',
+      name: 'Profile',
+
     });
   }
 
@@ -28,6 +45,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'email',
         id: 'EmailInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.email,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -47,6 +65,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'login',
         id: 'LoginInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.login,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -66,6 +85,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'first name',
         id: 'FirstNameInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.first_name,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -85,6 +105,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'second name',
         id: 'SecondNameInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.second_name,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -103,6 +124,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         name: 'display_name',
         label: 'nickname',
         modificator: 'wide',
+        value: this.props?.storeUser?.display_name,
         settings: { withInternalID: true },
         id: 'NicknameInput',
         onBlur: (e: Event) => {
@@ -123,6 +145,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'phone',
         id: 'PhoneInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.phone,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -142,6 +165,7 @@ export default class ProfilePage extends Block <IProfileProps> {
         label: 'password',
         id: 'PasswordInput',
         modificator: 'wide',
+        value: this.props?.storeUser?.password,
         settings: { withInternalID: true },
         onBlur: (e: Event) => {
           const { value } = (e.target as HTMLInputElement);
@@ -157,7 +181,7 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
-        this.OnChangeData();
+        this.OnChangeData(e);
       },
     });
     const ChangePasswordButton = new Button({
@@ -167,18 +191,19 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.OnChangePassword(e);
       },
     });
 
     const OldPasswordInput = new InputWrapper({
       type: 'password',
-      name: 'password',
+      name: 'oldPassword',
       label: 'password',
       error: false,
       settings: { withInternalID: true },
       Input: new Input({
         type: 'password',
-        name: 'password',
+        name: 'oldPassword',
         label: 'password',
         id: 'OldPasswordInput',
         modificator: 'wide',
@@ -191,13 +216,13 @@ export default class ProfilePage extends Block <IProfileProps> {
     });
     const NewPasswordInput = new InputWrapper({
       type: 'password',
-      name: 'password',
+      name: 'newPassword',
       label: 'password',
       error: false,
       settings: { withInternalID: true },
       Input: new Input({
         type: 'password',
-        name: 'password',
+        name: 'newPassword',
         label: 'password',
         id: 'NewPasswordInput',
         modificator: 'wide',
@@ -216,6 +241,7 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.authAction.logout(true);
       },
     });
     const BackButton = new Button({
@@ -224,8 +250,20 @@ export default class ProfilePage extends Block <IProfileProps> {
       settings: { withInternalID: true },
       onClick: (e: Event) => {
         e.preventDefault();
+        this.chatAction.setInterval();
+        window.router.go(Page.messenger);
       },
     });
+
+    const ProfileAvatar = new Avatar({
+      name: 'profile ava',
+      mode: 'profileAva',
+      avatarUrl: this.props?.storeUser?.avatar,
+      events: {
+        change: (e) => this.onChangeAvatar(e),
+      },
+    });
+
     this.children = {
       ...this.children,
       EmailInput,
@@ -241,22 +279,78 @@ export default class ProfilePage extends Block <IProfileProps> {
       NewPasswordInput,
       ExitButton,
       BackButton,
+      ProfileAvatar,
     };
   }
 
-  OnChangeData() {
-    console.log('we clicked OnChangeData');
-    const inputsCollection = document.querySelectorAll('input');
-    const filledValues: {[key: string]: string} = {};
-    inputsCollection.forEach((input) => {
-      filledValues[input.id] = input.value;
-      if (input.id && input.id !== '/') {
-        const error = !Validation.validate(input.value, input.name);
-        // TODO: add check if error have been changed
-        this.children[input.id].setProps({ error });
-      }
-    });
-    console.log(filledValues);
+  OnChangeData(event: Event) {
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as unknown as User;
+
+    const dataWithStringId: { [key: string]: string } = {
+      ...data,
+      id: String(data.id), // Convert id to string
+    };
+    const invalidFields = Validation.validateFrom(dataWithStringId);
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
+          child.setProps({ error: true });
+        }
+      });
+    } else {
+      this.profileActions.update(data);
+    }
+  }
+
+  OnChangePassword(event: Event) {
+    const form = (event.target as HTMLElement).closest('form') as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()) as PasswordUpdate;
+    const invalidFields = Validation.validateFrom(data);
+    if (invalidFields.length > 0) {
+      Object.values(this.children).forEach((child) => {
+        if (child.name && invalidFields.includes(child.name)) {
+          child.setProps({ error: true });
+        }
+      });
+    } else {
+      this.profileActions.updatePassword(data);
+    }
+  }
+
+  onChangeAvatar(event: Event) {
+    event.stopPropagation();
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.profileActions.updateAvatar(file);
+    }
+  }
+
+  componentDidMount(): void {
+    this.authAction.getCurrentUser();
+  }
+
+  componentDidUpdate(): boolean {
+    this.children.EmailInput.children.Input
+      .setProps({ value: this.props?.storeUser?.email });
+    this.children.LoginInput.children.Input
+      .setProps({ value: this.props?.storeUser?.login });
+    this.children.FirstNameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.first_name });
+    this.children.SecondNameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.second_name });
+    this.children.NicknameInput.children.Input
+      .setProps({ value: this.props?.storeUser?.display_name });
+    this.children.PhoneInput.children.Input
+      .setProps({ value: this.props?.storeUser?.phone });
+    this.children.PasswordInput.children.Input
+      .setProps({ value: this.props?.storeUser?.password });
+    this.children.ProfileAvatar
+      .setProps({ avatarUrl: this.props.storeUser?.avatar });
+    return true;
   }
 
   render(): string {
@@ -266,10 +360,8 @@ export default class ProfilePage extends Block <IProfileProps> {
                  {{{BackButton}}}
             </aside>
             <main class='profile_main'>
-                <img class='profile_avatar avatar' alt='my 
-                avatar' src='./assets/images/profile.jpg'></img>
+               {{{ProfileAvatar}}}
                 <form class='profile_form'>
-
                     {{{EmailInput}}}
                     {{{LoginInput}}}
                     {{{FirstNameInput}}}
@@ -279,16 +371,29 @@ export default class ProfilePage extends Block <IProfileProps> {
                     {{{PasswordInput}}}
 
                     {{{ChangeDataButton}}}
-                    {{{ChangePasswordButton}}}
+                   
 
+                </form>
+                <form class='profile_form'>
+                    {{{ChangePasswordButton}}}
                     {{{OldPasswordInput}}}
                     {{{NewPasswordInput}}}
-
                     {{{ExitButton}}}
                 </form>
+               
             </main>
         </div>
 
         `);
   }
 }
+
+export default connect((
+  {
+    storeUser,
+    passwordUpdated,
+  },
+) => ({
+  storeUser,
+  passwordUpdated,
+}))(ProfilePage as unknown as typeof Block);

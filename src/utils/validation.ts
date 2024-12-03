@@ -1,4 +1,15 @@
+
 export default class Validation {
+  static validateFrom(dataForm: {[key: string]: string}): string[]{
+    const errors: string[] = [];
+
+    Object.entries(dataForm).forEach(([key, value]) => {
+      if(!this.validate(value, key))
+        errors.push(key)
+    });
+    
+    return errors;
+  }
   static validate(value: string, type: string): boolean {
     switch (type) {
       case 'second_name':

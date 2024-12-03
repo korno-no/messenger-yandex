@@ -1,21 +1,21 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
+import Router  from '@utils/router';
+import Store from '@core/store';
+
 
 declare global {
   export type Keys<T extends Record<string, unknown>> = keyof T;
   export type Values<T extends Record<string, unknown>> = T[Keys<T>];
+  interface Window {
+    router: Router;
+    store: Store
+  }
 }
 
-const pages = {
-  login: [Pages.LoginPage],
-  nav: [Pages.NavigatePage],
-  registration: [Pages.RegistrationPage],
-  messenger: [Pages.MessengerPage],
-  profile: [Pages.ProfilePage],
-  404: [Pages.ErrorPage],
-  500: [Pages.ErrorFixingPage],
-};
+Handlebars.registerHelper('eq', (arg1, arg2) => arg1 === arg2);
+Handlebars.registerHelper('or', (arg1, arg2) => arg1 || arg2);
 
 Object.entries(Components).forEach(([name, component]) => {
   if (typeof component === 'string') {
@@ -23,33 +23,32 @@ Object.entries(Components).forEach(([name, component]) => {
   }
 });
 
-function navigate(page: string) {
-  // @ts-ignore
-  const [Source, context] = pages[page];
-  const container = document.getElementById('app')!;
 
-  if (Source instanceof Object) {
-    const newPage = new Source(context);
-    container.innerHTML = '';
-    container.append(newPage.getContent());
-    // page.dispatchComponentDidMount();
-    return;
-  }
+const router = new Router('#app');
+window.router = router;
 
-  container.innerHTML = Handlebars.compile(Source)(context);
+const store = new Store({
+  storeUser: [],
+  storeChats: [],
+  storeMessages: []
+})
+window.store = store;
+
+router.use('/', Pages.LoginPage )
+.use('/sign-up', Pages.RegistrationPage)
+.use('/messenger', Pages.MessengerPage)
+.use('/settings', Pages.ProfilePage)
+.use('/404', Pages.ErrorPage)
+.use('/500', Pages.ErrorFixingPage)
+.start();
+
+export enum Page {
+  login = '/',
+  registration = '/sign-up',
+  messenger = '/messenger',
+  profile = '/settings',
+  notFoundError = '/404',
+  serverError = '/500',
 }
 
-document.addEventListener('DOMContentLoaded', () => navigate('nav'));
 
-document.addEventListener('click', (e) => {
-  // @ts-ignore
-  const page = e.target.getAttribute('page');
-  if (page) {
-    navigate(page);
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }
-});
-
-Handlebars.registerHelper('eq', (arg1, arg2) => arg1 === arg2);

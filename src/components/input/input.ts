@@ -9,9 +9,12 @@ interface IInputProps extends BlockProps {
     onBlur?: (_e: Event) => void;
     events?: { [key: string]: EventListener };
     id?: string,
+    value?: string,
 }
 
 class Input extends Block<IInputProps> {
+  value: string | undefined;
+
   constructor(props: IInputProps) {
     super({
       ...props,
@@ -19,6 +22,7 @@ class Input extends Block<IInputProps> {
         blur: props.onBlur ?? (() => {}),
       },
     });
+    this.name = props.name;
   }
 
   render(): string {
@@ -29,6 +33,7 @@ class Input extends Block<IInputProps> {
                     name = {{name}}
                     type = {{type}}
                     id = {{id}}
+                    {{#if value}}value="{{value}}"{{/if}}
                 />
             `);
   }

@@ -3,7 +3,7 @@ import { Button } from '..';
 import './cover-screen.css';
 
 interface ICoverScreenProps extends BlockProps {
-    code: 500 | 404;
+    code?: 500 | 404;
     text: string;
     background: string;
     events?: { [key: string]: EventListener };
@@ -38,7 +38,9 @@ export default class CoverScreen extends Block<ICoverScreenProps> {
                         <h1>{{code}}</h1>
                         <p>{{text}}</p>
                         <div class='cover-screen_button'>
-                            {{{BackButton}}}
+                          {{#if code}}
+                              {{{BackButton}}}
+                          {{/if}}    
                         </div>
                     </div>
                 </div>
