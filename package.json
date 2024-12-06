@@ -9,7 +9,8 @@
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview",
-    "lint": "eslint 'src/**/*.ts' --fix",
+    "lint": "eslint '**/*.ts' --fix",
+   
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -21,7 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "chai": "^5.1.2",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
