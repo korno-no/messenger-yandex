@@ -1,6 +1,6 @@
 import Block, { BlockProps } from '../../core/block.ts';
 import './contact-card.css';
-import Avatar from '../../components/avatar/avatar.ts';
+import Avatar from '../avatar/avatar.ts';
 
 interface IContactCardProps extends BlockProps {
     chatId: number,

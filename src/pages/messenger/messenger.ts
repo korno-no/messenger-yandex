@@ -7,10 +7,11 @@ import {
   Button, Input,
   InputWrapper, ContactCard,
   Modal,
-  CoverScreen, Chat
+  CoverScreen, Chat,
 } from '../../components/index.ts';
-const backgroundImg = '../../assets/images/background.jpg'
 import './messenger.css';
+
+const backgroundImg = '../../assets/images/background.jpg';
 
 interface IMessengerProps extends BlockProps {
     title: string;

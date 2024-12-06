@@ -11,7 +11,6 @@ import {
 } from '../../components/index.ts';
 import './profile.css';
 
-
  interface IProfileProps extends BlockProps {
     storeUser?: User;
     title: string;
