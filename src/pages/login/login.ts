@@ -1,9 +1,9 @@
-import Block, { BlockProps } from '@core/block';
-import Validation from '@utils/validation';
-import { SignIn } from '@utils/types';
-import { AuthAction } from 'actions/auth-actions';
-import { Page } from 'main';
-import { Button, Input, InputWrapper } from '../../components';
+import Block, { BlockProps } from '../../core/block.ts';
+import Validation from '../../utils/validation.ts';
+import { SignIn } from '../../utils/types.ts';
+import { AuthAction } from '../../actions/auth-actions.ts';
+import { Page } from '../../main.ts';
+import { Button, Input, InputWrapper } from '../../components/index.ts';
 
 interface ILoginProps extends BlockProps {
     title: string;

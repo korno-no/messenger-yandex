@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '@core/block';
+import Block, { BlockProps } from '../../core/block.ts';
 import './button.css';
 
 interface IButtonProps extends BlockProps {

@@ -9,10 +9,11 @@
     "paths": {
       "@core/*": ["core/*"], 
       "@utils/*": ["utils/*"],
-      "@api/*": ["api/*"]
+      "@api/*": ["api/*"],
+      "*": ["*"]
     },
     "esModuleInterop": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -28,5 +29,5 @@
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [ "src/**/*" ]
+  "include": [ "src/**/*",  "src/vite-env.d.ts" ]
 }

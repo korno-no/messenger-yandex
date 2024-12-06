@@ -1,7 +1,7 @@
-import HTTP from '@core/http';
-import WsTransport from '@core/ws';
-import { baseUrl } from '@utils/const';
-import { BaseAPI } from './base-api';
+import HTTP from '../core/http.ts';
+import WsTransport from '../core/ws.ts';
+import { baseUrl } from '../utils/const.ts';
+import { BaseAPI } from './base-api.ts';
 
 const chatsAPIInstance = new HTTP(`${baseUrl}/chats`);
 

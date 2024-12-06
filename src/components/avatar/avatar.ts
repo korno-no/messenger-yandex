@@ -1,5 +1,5 @@
-import Block, { BlockProps } from '@core/block';
-import { imageUrl } from '@utils/const';
+import Block, { BlockProps } from '../../core/block.ts';
+import { imageUrl } from '../../utils/const.ts';
 import './avatar.css';
 
 interface AvatarProps extends BlockProps {

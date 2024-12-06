@@ -1,15 +1,16 @@
-import Block, { BlockProps } from '@core/block';
-import { ChatsActions } from 'actions/chats-actions';
-import { AuthAction } from 'actions/auth-actions';
-import connect from '@core/connect';
-import { Page } from 'main';
+import Block, { BlockProps } from '../../core/block.ts';
+import { ChatsActions } from '../../actions/chats-actions.ts';
+import { AuthAction } from '../../actions/auth-actions.ts';
+import connect from '../../core/connect.ts';
+import { Page } from '../../main.ts';
 import {
   Button, Input,
   InputWrapper, ContactCard,
   Modal,
-  CoverScreen, Chat,
-} from '../../components';
-import backgroundImg from '../../assets/images/background.jpg';
+  CoverScreen, Chat
+} from '../../components/index.ts';
+const backgroundImg = '../../assets/images/background.jpg'
+import './messenger.css';
 
 interface IMessengerProps extends BlockProps {
     title: string;

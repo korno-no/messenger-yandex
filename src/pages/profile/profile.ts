@@ -1,14 +1,16 @@
-import Block, { BlockProps } from '@core/block';
-import Validation from '@utils/validation';
-import { AuthAction } from 'actions/auth-actions';
-import { ProfileActions } from 'actions/profile-actions';
-import { ChatsActions } from 'actions/chats-actions';
-import { Page } from 'main';
-import connect from '@core/connect';
-import { User, PasswordUpdate } from '@utils/types';
+import Block, { BlockProps } from '../../core/block.ts';
+import Validation from '../../utils/validation.ts';
+import { AuthAction } from '../../actions/auth-actions.ts';
+import { ProfileActions } from '../../actions/profile-actions.ts';
+import { ChatsActions } from '../../actions/chats-actions.ts';
+import { Page } from '../../main.ts';
+import connect from '../../core/connect.ts';
+import { User, PasswordUpdate } from '../../utils/types.ts';
 import {
   Button, Input, InputWrapper, Avatar,
-} from '../../components';
+} from '../../components/index.ts';
+import './profile.css';
+
 
  interface IProfileProps extends BlockProps {
     storeUser?: User;

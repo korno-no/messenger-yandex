@@ -1,7 +1,7 @@
-import ChatsApi from '@api/chats-api';
-import ChatMessagesApi from '@api/chat-messages-api';
+import ChatsApi from '../api/chats-api.ts';
+import ChatMessagesApi from '../api/chat-messages-api.ts';
 
-let chaInterval: number | undefined;
+let chaInterval: NodeJS.Timeout | undefined;
 
 export class ChatsActions {
   public async getChats() {

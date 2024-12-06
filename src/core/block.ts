@@ -1,8 +1,9 @@
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
-import EventBus from './event-bus';
-import isEqual from '@utils/isEqual';
+import EventBus from './event-bus.ts';
+import isEqual from '../utils/isEqual.ts';
 
+type Values<T> = T[keyof T];
 type TEvents = Values<typeof Block.EVENTS>
 type PropsWithChildren<T> = T & { [key: string]: any | (Block<any> | Partial<T>)[]; };
 
@@ -156,7 +157,7 @@ class Block<T extends BlockProps = BlockProps> {
     return '';
   }
 
-  getContent() {
+  getContent(): HTMLElement{
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
         if (
@@ -167,7 +168,7 @@ class Block<T extends BlockProps = BlockProps> {
       }, 100);
     }
     
-    return this._element;
+    return this._element as HTMLElement;
   }
 
   _makePropsProxy(props: Partial<T> | Record<string, Block<any>[]>): T {
