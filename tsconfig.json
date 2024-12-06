@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-
+    "types": ["node", "mocha"],
     
     "strict": true,
     "noImplicitAny": true,

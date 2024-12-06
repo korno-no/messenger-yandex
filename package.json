@@ -9,8 +9,8 @@
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview",
-    "lint": "eslint 'src/**' --fix",
-    "pre-commit": "npm run test && npm run lint && npm run lint"
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",
