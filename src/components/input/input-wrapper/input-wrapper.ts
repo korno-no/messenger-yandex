@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '@core/block';
+import Block, { BlockProps } from '../../../core/block.ts';
 import './input-wrapper.css';
 
 interface IInputProps extends BlockProps {

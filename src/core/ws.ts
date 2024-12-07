@@ -33,9 +33,14 @@ export default class WsTransport  {
         });
     
         this.socket.addEventListener('message', (event) => {
-
-            console.log('Data received', event.data);
-            const data =  JSON.parse(event.data)
+            let data
+            try{
+                console.log('Data received', event.data);
+                data =  JSON.parse(event.data)
+            }
+            catch (error) {
+                console.error('Failed to recive data form ws:', error);
+            }
             
             if(data.type === 'error' || data.type === 'pong' || data.type ===  'user connected'){
                 console.log(data);

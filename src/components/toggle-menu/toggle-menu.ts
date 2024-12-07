@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '@core/block';
+import Block, { BlockProps } from '../../core/block.ts';
 import './toggle-menu.css';
 
 interface IToggleMenuProps extends BlockProps {

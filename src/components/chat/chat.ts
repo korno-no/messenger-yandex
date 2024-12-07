@@ -1,11 +1,11 @@
-import Block, { BlockProps } from '@core/block';
+import Block, { BlockProps } from '../../core/block.ts';
 import {
   Input, Button, ToggleMenu, Message, Avatar,
-} from 'components';
+} from '../index.ts';
 import './chat.css';
-import Validation from '@utils/validation';
-import { ChatsActions } from 'actions/chats-actions';
-import connect from '@core/connect';
+import Validation from '../../utils/validation.ts';
+import { ChatsActions } from '../../actions/chats-actions.ts';
+import connect from '../../core/connect.ts';
 
 interface IChatProps extends BlockProps {
     chatId?: number;

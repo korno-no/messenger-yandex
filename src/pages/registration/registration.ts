@@ -1,9 +1,9 @@
-import Block, { BlockProps } from '@core/block';
-import Validation from '@utils/validation';
-import { Button, Input, InputWrapper } from 'components';
-import { User } from '@utils/types';
-import { AuthAction } from 'actions/auth-actions';
-import { Page } from 'main';
+import Block, { BlockProps } from '../../core/block.ts';
+import Validation from '../../utils/validation.ts';
+import { Button, Input, InputWrapper } from '../../components/index.ts';
+import { User } from '../../utils/types.ts';
+import { AuthAction } from '../../actions/auth-actions.ts';
+import { Page } from '../../main.ts';
 
 export default class RegistrationPage extends Block {
   authAction = new AuthAction();

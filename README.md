@@ -12,6 +12,12 @@ The project utilizes tools such as Vite, Handlebars, and other key technologies 
 - **HTTP Requests**: A custom HTTP layer to handle API requests, ensuring full control over the interaction with the server.
 - **WebSockets**: Real-time communication between users for messaging, implemented from scratch for seamless interaction.
 
+Automation Tests
+The project includes automated tests with Mocha and Chai to ensure the application remains stable and reliable.
+
+Pre-Commit Hooks with Husky
+We have configured Husky to run pre-commit hooks that ensure code quality by running linting and tests before each commit.
+
 
 You can check out the prototype on [figma](https://www.figma.com/design/U9OaAoHcsa2Xy1UN7R42cJ/Untitled?node-id=0-1&t=JNhjrIr3G59G323D-0) to see the design vision I’m working towards.
 

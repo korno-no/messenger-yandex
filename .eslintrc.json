@@ -25,9 +25,8 @@
       "error",
       "always",
       {
-        "ts": "never", // Если ты хочешь, чтобы .ts не указывались
-        "js": "never" // То же для .js
-       
+        "ts": "always", 
+        "js": "always" 
       }
     ]
   },

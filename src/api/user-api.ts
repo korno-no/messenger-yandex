@@ -1,7 +1,7 @@
-import { User, PasswordUpdate } from '@utils/types';
-import { baseUrl } from '@utils/const';
-import HTTP from '../core/http';
-import { BaseAPI } from './base-api';
+import { User, PasswordUpdate } from '../utils/types.ts';
+import { baseUrl } from '../utils/const.ts';
+import HTTP from '../core/http.ts';
+import { BaseAPI } from './base-api.ts';
 
 const userApi = new HTTP(`${baseUrl}/user`);
 

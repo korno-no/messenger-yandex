@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '@core/block';
+import Block, { BlockProps } from '../../core/block.ts';
 import './message.css';
 
 interface IMessageProps extends BlockProps {

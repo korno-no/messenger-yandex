@@ -1,6 +1,6 @@
-import AuthApi from '@api/auth-api';
-import { User, SignIn } from '@utils/types';
-import { Page } from 'main';
+import AuthApi from '../api/auth-api.ts';
+import { User, SignIn } from '../utils/types.ts';
+import { Page } from '../main.ts';
 
 export class AuthAction {
   public async createNewUser(data: User) {
