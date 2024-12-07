@@ -10,8 +10,17 @@
     "dev": "vite",
     "preview": "vite preview",
     "lint": "eslint '**/*.ts' --fix",
-   
+    "lint:ts": "eslint '**/*.ts' --fix",
+    "lint:styles": "stylelint '**/*.css' --fix",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix"
+    ],
+    "**/*.css": [
+      "stylelint --fix"
+    ]
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",
@@ -28,6 +37,7 @@
     "eslint-plugin-import": "^2.29.1",
     "husky": "^8.0.0",
     "jsdom": "^25.0.1",
+    "lint-staged": "^15.2.10",
     "mocha": "^11.0.1",
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^36.0.1",
