@@ -1,6 +1,7 @@
-import Block, { BlockProps } from '@core/block';
-import { CoverScreen } from '../../components';
-import backgroundImg from '../../assets/images/background.jpg';
+import Block, { BlockProps } from '../../core/block.ts';
+import { CoverScreen } from '../../components/index.ts';
+
+const backgroundImg = '../../assets/images/background.jpg';
 
 interface IErrorFixingPageProps extends BlockProps {}
 

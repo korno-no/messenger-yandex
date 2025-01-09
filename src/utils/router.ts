@@ -1,5 +1,5 @@
-import Block from '@core/block';
-import Route from './route';
+import Block from '@core/block.ts';
+import Route from './route.ts';
 
 class Router {
     private static __instance: Router | null = null;  
@@ -68,6 +68,10 @@ class Router {
             throw new Error(`Route not found for pathname: ${pathname}`)
         }
         return route;
+    }
+
+    get currentRoute() {
+        return this._currentRoute;
     }
 }
 

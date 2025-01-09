@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
-import * as Components from './components';
-import * as Pages from './pages';
-import Router  from '@utils/router';
-import Store from '@core/store';
+import * as Components from './components/index.ts'
+import * as Pages from './pages/index.ts';
+import Router  from './utils/router.ts';
+import Store from './core/store.ts';
 
 
 declare global {

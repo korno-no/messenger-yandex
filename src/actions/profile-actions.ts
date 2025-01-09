@@ -1,5 +1,5 @@
-import UserApi from '@api/user-api';
-import { User, PasswordUpdate } from '@utils/types';
+import UserApi from '../api/user-api.ts';
+import { User, PasswordUpdate } from '../utils/types.ts';
 
 export class ProfileActions {
   public async update(data: User) {

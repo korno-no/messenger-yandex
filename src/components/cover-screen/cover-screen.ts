@@ -1,5 +1,5 @@
-import Block, { BlockProps } from '@core/block';
-import { Button } from '..';
+import Block, { BlockProps } from '../../core/block.ts';
+import { Button } from '../index.ts';
 import './cover-screen.css';
 
 interface ICoverScreenProps extends BlockProps {

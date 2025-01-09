@@ -1,6 +1,6 @@
-import { baseUrl } from '@utils/const';
-import HTTP from '../core/http';
-import { BaseAPI } from './base-api';
+import { baseUrl } from '../utils/const.ts';
+import HTTP from '../core/http.ts';
+import { BaseAPI } from './base-api.ts';
 
 const resourcesApi = new HTTP(`${baseUrl}/resources`);
 

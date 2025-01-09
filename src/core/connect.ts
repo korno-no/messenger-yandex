@@ -1,6 +1,6 @@
-import Block from "./block";
-import {  StoreEvents }  from "./store";
-import isEqual from "@utils/isEqual";
+import Block from "./block.ts";
+import {  StoreEvents }  from "./store.ts";
+import isEqual from "../utils/isEqual.ts";
 
 type Indexed<T = any> = {
     [key in string]: T;
